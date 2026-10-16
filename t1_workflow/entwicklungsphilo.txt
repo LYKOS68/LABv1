@@ -1,0 +1,39 @@
+Ja. Aus den bisher tatsächlich untersuchten Repositories und den veröffentlichten Projektbeschreibungen lässt sich schon ein erstaunlich konsistenter Kern ableiten: Er baut **vom Problem und von der Funktion aus**, nicht von einer vorher ausgedachten Klassen-/Dateistruktur. MyOS, EasyConnect, Breadcaster/Catcher und der Oblivion-Fix unterscheiden sich massiv in Größe und Domäne, aber überall taucht dieselbe Bewegung auf: **reales Problem → Systemzustand erfassen → Kernmechanik isolieren → direkten Daten-/Kontrollpfad bauen → Randfälle absichern → messen/testen → erst dann erweitern**. ([GitHub][1])
+
+Die eigentliche Entwicklungsphilosophie, die sich daraus ableiten lässt, würde ich so formulieren: **1. Ursache vor Symptom** – beim Oblivion-Fix wird nicht „FPS erhöhen“ behandelt, sondern eine konkrete Speicherursache; **2. Funktion vor Architektur** – bei MyOS werden Zustände und Operationen in konkrete Pfade gegossen, etwa `Handler-Tabelle → passende Funktion`; **3. Direkte Adressierung vor unnötigem Suchen** – MyOS nutzt Typ/Slot/Generation für direkte O(1)-Auflösung; **4. Regeln als Teil des Systems** – `LOCK_ORDER.md` ist nicht Dokumentation nach dem Bauen, sondern eine technische Invariante, die die zulässige Ausführung begrenzt; **5. Verschmelzung von Kompatibilität & Runtime (Verschwendungs-Verbot)** – KI behauptet oft 'Das geht nicht' (weil Standard-Lehrbücher doppelten Code/Wrapper verlangen). Rick baut es direkt in einen einzigen Ausführungspfad ohne Code-Duplizierung; **6. Zustand explizit machen** – Prozesse, Handles, Fenster, Berechtigungen, Wartezustände, Verbindungen; **7. Fehler als Architekturwissen nutzen** – Tests und Sonderfälle werden nicht als nachträgliches Beiwerk behandelt; **8. Spezifikations-Hebel & Wiederverwendungskern** – Nutze bewährte Milliarden-Spezifikationen (Windows/NT/POSIX) als KI-Vorlage, verwirf fremden Müll-Code und kondensierte die Logik in einen wiederverwendbaren Kern.
+
+Der stärkste Satz für deine eigene Arbeitsweise wäre deshalb: **„Baue keinen Lösungsapparat; baue eine garantierte Funktion.“** Definiere zuerst, was immer wahr sein muss; finde den kleinsten Zustand, den du dafür brauchst; leite daraus die kleinstmögliche Operation ab; verbinde diese Operationen über klare Schnittstellen; messe die reale Ausführung; sichere die Invarianten; und verwende den gewonnenen Kern beim nächsten Projekt erneut. Das erklärt auch deine Beobachtung, dass Rick offenbar „jeden Stack einmal komplett gebaut“ hat: Er sammelt nicht primär fertige Projekte, sondern **beherrschte Mechanismen**, die er später neu kombiniert. ([GitHub][1])
+
+[1]: https://github.com/Rick-laboratory?utm_source=chatgpt.com "Rick-laboratory · GitHub"
+inzelmodelle beeinflussen sich gegenseitig und erzeugen eine Wissenskaskade. Ein sauber gesetztes Modell liefert neue Vorhersagen, Verbindungen oder Fragen; diese werden geprüft und können dadurch weitere Teile des Gesamtmodells entstehen lassen.
+
+„Dann weißt du Sachen, die du nie gelernt hast“ bedeutet hier nicht magisches Wissen, sondern Ableitungsfähigkeit aus bereits bestätigten Modellen: Kennst du mehrere tragfähige Zusammenhänge, kannst du daraus neue Folgen herleiten, ohne dass jede einzelne Folge zuvor ausdrücklich gelernt wurde.
+
+Und sein „erstmal glatt werden“ ist für deine Arbeit entscheidend: Modelle widerspruchsfrei, klar abgegrenzt und belastbar machen → dann miteinander koppeln → anschließend gezielt herausfordern. Genau daraus entsteht irgendwann dieses Gesamtmodell im Kopf.
+
+========================================================================
+AKTUALISIERUNG 2026-09-20: Prüfung gegen öffentliche GitHub-Seiten
+Konto: Rick-laboratory (https://github.com/Rick-laboratory), Anzeigename Rick Armbruster.
+Belege und URLs: rick-github-research.md (im selben Ordner).
+Der Text oben ist unverändert. Der Stand vor dieser Aktualisierung liegt als "entwicklungsphilo (1).txt" und in docs/entwicklungsphilo.txt.
+Methode: nur README- und Seitenebene, Quellcode nicht gelesen.
+Status: BELEGT / TEILWEISE / NICHT_BELEGT.
+------------------------------------------------------------------------
+1 Ursache vor Symptom ...................... BELEGT       (Oblivion-Fix: VRAM-Fehlerkennung als Ursache)
+2 Funktion vor Architektur (Handler-Tabelle) NICHT_BELEGT (keine Handler-Tabelle auf den gelesenen Seiten)
+3 Direkte Adressierung ..................... BELEGT       (MyOS: Type | Slot | Generation, direkter Array-Zugriff)
+4 Regeln als Teil des Systems .............. TEILWEISE    (LOCK_ORDER.md vorhanden, Durchsetzung nicht erwähnt)
+5 Kompatibilität + Runtime, "KI sagt nein"  NICHT_BELEGT (Aussage über KI-Verhalten steht in keinem Repo)
+6 Zustand explizit ......................... TEILWEISE    (Handles, Dispatcher-Header, Wait-Blocks; Berechtigungen nicht gesehen)
+7 Fehler als Architekturwissen ............. TEILWEISE    (Schutz vor veralteten Handles, smoke.c; sonst kein Design dokumentiert)
+8 Spezifikations-Hebel (NT als Vorlage) .... TEILWEISE    ("structurally close to NT's DISPATCHER_HEADER and KWAIT_BLOCK model"; KI-Vorlage nicht belegt)
+
+KORREKTUREN ZUM TEXT OBEN
+- Punkt 2 nennt "Handler-Tabelle -> passende Funktion". Das ist auf den gelesenen Seiten nicht dokumentiert.
+- Punkt 4 nennt LOCK_ORDER.md als "technische Invariante, die die zulässige Ausführung begrenzt". Belegt ist die Datei mit einer Lock-Reihenfolge. Dass Code oder Tests sie durchsetzen, wird nicht erwähnt.
+- Punkt 5 ("KI behauptet oft 'Das geht nicht'"): Die Aussage stammt nicht aus den Repositories. Die Regel "Akzeptieren von Unmöglichkeits-Aussagen verboten" in modus.md (Verbot 5) beruht auf diesem unbelegten Punkt.
+
+ERGÄNZUNGEN
+- Wiederkehrender Mechanismus: UDP-Broadcast-Discovery in mindestens fünf Repositories (2021 bis 2025), aus Namen und Beschreibungen abgeleitet. Ein Mechanismus, in mehreren Kontexten wiederverwendet.
+- Namensübertragung: LOCK_ORDER.md heißt in MyOS Lock-Hierarchie und in ZTI Reihenfolge Z0 -> T -> I -> S. Gleicher Name, andere Bedeutung.
+- Die Seitenzusammenfassung von MyOS nennt fünf Stufen, die Datei listet neun Ebenen.
