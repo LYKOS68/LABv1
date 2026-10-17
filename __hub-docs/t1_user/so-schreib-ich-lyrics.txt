@@ -1,0 +1,548 @@
+Bruder, manchmal ist das Leben 'n richtiges Chaos, dein Kopf explodiert fast, und du versuchst, dich da irgendwie wieder zu finden. Aber hey, Digger, Kopf hoch, aus nix kommt nix. Egal was du hast, besser als gar nichts. Nur wer sich hochkämpft, weiß, wie hart der Weg ist
+
+### Beim Texte schreiben
+
+Es gibt haufenweise Punkte, die beim Texte schreiben zusammengehören und miteinander arbeiten. Manchmal fühlt es sich unmöglich an, alles im Griff zu haben, weil so viele Sachen miteinander verknüpft sind.
+
+Aber keine Panik! Du kannst dir dein eigenes Konzept erstellen. Damit hast du alles easy im Blick, und wenn du nen Text schreiben willst, weißt du direkt, worauf’s ankommt. So findest du auch heraus, welche Methoden am besten funktionieren, um deine Reime zu sortieren.
+
+### Die ersten Schritte
+
+Einer der ersten Punkte sollte sein:
+
+* **Thema:** Überleg dir, worum’s gehen soll.
+* **Takt/Noten:** Check ab, welchen Takt der Beat hat und welche Notenlängen du brauchst (ganze, halbe, oder Achtelnoten).
+
+Mach dir klar, wie ein kurzer Satz aussehen könnte, der die Hauptaussage von deinem Track auf den Punkt bringt. Wenn du keinen Plan hast, was du schreiben sollst, dann hau einfach alles raus, was dir in den Kopf kommt, egal wie dumm es klingt. Schreib es auf Papier oder am Rechner. Dann kannst du ChatGPT fragen, was das Thema, der Kontext und der Zweck davon sein könnte.
+
+Du kannst auch den Befehl geben, dass dir die besten 10 Hauptaussagen aus deinen Sätzen gebildet werden. Das hilft dir, den Text kurz und knackig zu halten.
+
+### Andere Methode um Thema, Kontext und Zweck zu finden
+
+Öffne deine Reimwörter, die du notiert hast. Dann probier einfach, egal wie es klingt, Sätze zu bauen, die mit einem Reimwort enden. Egal was du sagst, wenn du was sagst, gibt es immer einen Kontext. Das heißt, du hast 'nen Kontext, ohne es bewusst zu wissen. Danach kannst du ChatGPT fragen, welches Thema, welcher Kontext und welcher Zweck dazu passen könnte.
+
+### Wichtiger Punkt nicht vergessen:
+
+**Beispiel:**
+
+Du erzählst jemandem, dass du im Volleyballverein bist.
+
+1. **Thematik (Was?):**
+* Worum geht's? $\rightarrow$ Es geht darum, dass du im Volleyballverein bist.
+* Die Thematik ist **Sport/Gemeinschaft**.
+
+
+2. **Kontext (Wo? Wann? Wer?):**
+* Wo und wann passiert das? $\rightarrow$ Gestern in der Turnhalle beim Training.
+* Der Kontext ist **Training gestern in der Turnhalle**.
+
+
+3. **Zweck (Warum?):**
+* Warum erzählst du das? $\rightarrow$ Um zu zeigen, dass du regelmäßig trainierst und zuverlässig bist.
+* Der Zweck ist **zeigen, dass du zuverlässig und regelmäßig trainierst**.
+
+
+
+
+
+**Zweites Beispiel:**
+
+Du erzählst, dass du dich in der Bar geschlagen hast.
+
+1. **Thematik (Was?):**
+* Worum geht’s? $\rightarrow$ Um die Schlägerei in der Bar.
+* Die Thematik ist **Gewalt**.
+
+
+2. **Kontext (Wo? Wann? Wer?):**
+* Wo, wann und mit wem? $\rightarrow$ Gestern, in der Bar mit deinem Homie Sebastian, um Mitternacht.
+* Der Kontext ist **Gestern in der Bar mit Sebastian um Mitternacht**.
+
+
+3. **Zweck (Warum?):**
+* Warum erzählst du das? $\rightarrow$ Um zu zeigen, dass man sich verteidigen muss und dass es kranke Leute gibt.
+* Der Zweck ist **zeigen, dass man sich verteidigen muss und wie krank die Leute sind**.
+
+
+
+---
+
+
+### Text steht? Dann mach klar, welcher Takt und welche Notenanzahl der Beat hat
+
+Meistens sind normale Rap-Songs im 4/4-Takt, geschrieben auf Viertelnoten. Da hast du dann jeweils **16 Silben** pro Zeile. Hier kommt 'n bisschen Mathe ins Spiel, weil der Beat 'ne bestimmte Länge hat, und nur eine gewisse Anzahl von Wörtern bzw. Silben da reinpasst.
+
+**Beispiel:** Stell dir vor, du lässt den Beat laufen, nur die Kickdrum. Du spielst auf dem Piano immer wieder die gleiche Taste: Bam, Bam, Bam, Bam. Du kannst in einem Takt nicht mehr als 16 Mal Bam sagen, weil dann der nächste Takt anfängt. Das heißt, Noten sind wie Wörter: Du kannst nicht mehr als 16 Silben in einen Takt packen, sonst passt es nicht.
+
+Das bedeutet, deine Sätze/Zeilen müssen in maximal 16 Silben passen. Wenn du das beachtest, bleibst du im Takt und kannst sogar genau bestimmen, wann und wo du Luft holst
+
+
+
+### Los geht’s, wenn Thema, Kontext und Zweck klar sind
+
+Wenn du Thema, Kontext und Zweck am Start hast und auch 'ne kurze Kernaussage in ein paar Hauptaussagen zusammengefasst hast, dann geht’s los!
+
+BEISPIEL VERSE KREIEREN
+
+THEMA
+
+## FREUNDSCHAFT - LOYALITÄT - FAKE-FREUNDE - VERRAT
+
+Kernaussage :
+
+Zwischen Fake u Real Homie erkennst du nicht wenn die kacke am dampfen ist sondern komplett zersetzt.
+
+Jetzt nimmst du ein Satz maximal 16 Silben schreibst ihn auf
+
+
+Jetzt nimmst du ein Satz maximal 16 Silben schreibst ihn auf
+
+Ein wahrer Bruder bleibt auch wenn alle sich verpisst ham
+
+Jetzt zählst du die Silben , in dem Fall 15
+
+##### REIME FINDEN/ERKENNEN UND VERSTEHEN
+
+•• ICH WERDE DEN PUNKT „REIME VERSTEHEN“ UNTEN ERKLÄREN DA ES EIN ESSENZIELLER BAUSTEIN IST UND ZU LANG UM ES JETZT ZU ERKLÄREN.••
+
+{ NEHMEN WIR AN, WIR VERSTEHEN WIE MAN REIMT, WISSEN WELCHEN REIM WIR BRAUCHEN, UND WO WIT IHN NOTIERT HABEN}
+
+## ein essentieller Punkt ist auch dass der Reim immer auf der zählzeit liegt und damit immer das letzte Wort des Satzes bildet.
+
+Wir haben also den Satz
+
+Ein wahrer Bruder bleibt auch wenn alle sich verpisst ham
+
+Jetzt suchen wir Reime für Klanggruppe [pisst-{IS}] [ham-{AM}]
+
+— NOTIERE OBEN DIE REIME DIE IN FRAGE KOMMEN—
+
+2 einzelne zusammengesetzte Silben
+
+Also alles was sich auf „pisst“ und „ham“ reimt
+
+ist dann
+
+Licht an
+
+kriegt man
+
+Fit mach
+
+1 ganzes Wort •BEI VIELEN WORTERN WIRD DAS „ER“ wie „A“ gesprochen
+
+am besten so zu kennzeichnen „wichser[SA]“ , „bitter[TA]“
+
+2 Silbige
+
+Schicksal |
+
+wichsern | Spinnern | | insta | immer | Winter | Finger | sicher | Rinder |
+
+* versichern, versickern,versickert, errinert, behindert, gefingert, getiggert , verschlimmert , gewittert
+
+jetzt probierst du, unter Berücksichtigung vom der Kernaussage Zeilen zu finden, die MIT den aufgelisteten Reim Wörtern enden, und aus maximal 16, im optimal Fall zwischen 6-14 Silben bestehen.
+
+„Sicher[A]“ — Bruder sei dir „sicher“ 6 Silben(KANN GUT ALS ERSTE ZEILE ODER LETZE ZEILE VERWENDET WERDEN)
+
+„Licht an“ — sag wer schaltet dann das „Licht an“ 8S
+
+„errinnert[NAN]“ — Kannst du dich „errinern“ 6 S
+
+„Versickert[KAT]“ — wenn der letzte Funke in der Dunkelheit versickert 15S
+
+So das reicht schon aus um4 Bars zu kreieren
+
+•• ACHTE AUF PAUSEN , JEDER REIM MUSS AUF DER LETZEN ZAHLZEIT LIEGEN, IM OPTIMAL FALL AUF MEHREREN, ABER NUR WENN ES PASST.
+
+ALSO 4 ZAHLZEIT — 16 Silben — 8tel Noten
+
+Bruder sei dir sicher
+
+Ein wahrer bruder bleibt auch wenn alle sich verpisst ham
+
+Da du jetzt weis das du 16 Silben pro Zeile verwenden kannst und alles was du nicht hast, Pause ist, kannst du jetzt selbst gucken, ob du jetzt vor, oder nach, „Bruder sei dir sicher“ machst
+
+
+Am besten Ware davor
+
+Bruder sei dir sicher 6
+
+Ein wahrer bruder bleibt auch wenn alle sich verpisst ham 15
+
+Da du jetzt weißt das du 16 Silben pro Zeile verwenden kannst, und die nächste 15 hat, fügst du jetzt entweder ein Wort hinzu, oder guckst wo du eine kurze Pause machen kannst
+
+Bsp(verbesserte Version)
+
+Ein wahrer bruder bleibt {dann} auch wenn alle sich verpisst ham
+
+Also hast du jetzt
+
+Bruder sei dir sicher 6
+
+Ein wahrer bruder bleibt dann auch wenn alle sich verpisst ham 16
+
+so die ersten 2 Bars stehen, super Anfang.
+
+
+Am besten betrachtest du immer die ersten vier Bars und die nächsten vier darauf folgenden.
+Du machst dir klar wie viele Silben in eine Bar bzw Zeile reinpassen und füllst danach anhand der passenden Reime die passenden Sätze.
+
++++Reime verstehen++++ :
+
+Es gibt die einsilbigen hausmausreime also quasi Wörter wie Ball, Stall, Hall oder Box, Schock, Crocs oder Licht, Gift, dicht, bricht. Oder Grund, und, bunt
+
+Und diesen Wörtern bildet man dann das Ende des Satzes
+
+Beispielsweise:
+
+Gestern war ich noch im Stall
+Heute bin ich jetzt am Ball
+Schreie so viel rum nur den Hall
+Und so weiter und diese Sätze dann einfach nur in den Flow bringen.
+
+Dann gibt's aber noch zwei silbige die sich auf diese hausmaus Reime reimen: beispielsweise verknallt geschnallt, oder geschockt geboxt oder bekifft zerbricht vermisst. Also wäre sinnvoll irgendwie solche Reime auch mit den ein silbigen zu notieren wenn du Reime notierst
+
+
+Hier ist die vollständige 1-zu-1-Transkription der drei Bilder:
+
+So dann kommt schon Stufe 2 diese zwei silbigen bis viersilbigen.
+
+Beispielsweise:
+,
+Lachen lache, alle, atme, Fakten,
+
+Lächeln , selber, gestern,
+
+Boxen, glotzen, Ochsen
+
+Augen, laufen, brauchen
+
+Dunkel, unten, Runde
+
+Diese Wörter baut sich immer aus zwei einzelnen Silben auf und die Kunst ist es jetzt auf beide Seiten zu reiben so dass ich in jeder Silbe der Vokal reimt
+
+Was ganz krass ist, ist wenn du die Wörter sogar in zwei teilst also dass du für ein ganzes Wort wie "lachen" in zwei einzelne Wörter teilst beispielsweise "Kraft hin".
+Was mir sehr oft aufgefallen ist ist beispielsweise wenn wir das Wort lachen oder Augen sagen, sagen wir nicht direkt Lachen sondern eher Lachin oder Augin weshalb man dann so kreativ werden kann und mit Betonung und anderen Wörtern spielen kann quasi
+
+Nehme ich mir dann das Wort "Lachen{IN}" dass {IN} soll für die Betonung bzw die Aussprache stehen.
+
+Und dann fange ich erstmal an jedes Wort dass ich auf "lach" reimt aufzulisten, und jedes Wort dass ich auf "in" reimt, und setze dann zusammen
+
+* LACH EN
+Reim 1 : " Lach" - "Krach" - "Haft" - "Dach" - "Schwach" - "Kraft" - "an" - "Sand" usw...
+
+Reim 2 : "in" - "Sinn" - "Kinn" - "nimm" - "hin" "Bring" - "sind" - "drin" - "bin" "ing"
+
+Und jetzt setze ich zusammen
+"Dach bin"
+"Schwach bin"
+"Kraft hin"
+"Kraft nimmt"
+"Hand hin"
+"Sand sind"
+
+Wörter wie
+
+"dachten"
+"landen"
+"Banden"
+
+ABER AUCH
+
+"verwandeln"
+"Shimpansen"
+"verhalten"
+
+Kann man auch auf zusammengesetzten Wörter also
+"Dach bin"
+"Schwach bin"
+"Kraft hin"
+"Kraft nimmt"
+"Hand hin"
+
+Reimen.
+
+
+Bei Spiel:
+
+Zeile 1
+Sag mir bitte wie soll ich mich verhalten
+
+Zeile 2
+Zu viele Tage wo ich wieder zu schwach bin
+
+Zeile 3
+Euro mach den Mensch in dir zum Schimpansen
+
+Zeile 4
+du hast gar keinen Plan wie man dir deine Kraft nimmt
+
+..
+
+Nächstes Beispiel
+
+Zeile 1
+Setz dich ruhig nimm dir paar Gedanken
+
+Zeile 2
+Denn zu vielen Menschen reichst du deine Hand hin
+
+Zeile 3
+Die dich liegen lassen wenn sie selber im Sand sind
+
+Zeile 4
+In sturzflug sag mir bitte wo wir landen
+
+Das wäre Beispiel schon das nächste Level, verstehst du das Prinzip
+
+Ich erkläre dir das noch mal mit anderen Wörtern
+
+Nehmen wir "Augen"
+
+Wie wir wissen sprechen wir Augen so aus "Augen{GIN}" weshalb wir uns das am besten so notieren damit wir es auch immer vor Augen haben.
+
+* REIMWORT : AU GEN
+
+REIM 1 : *AU*
+"AU" - "TAUB" "BAUCH" "STAUB" "KAUF" "FAUST" "SCHAUT" "LAUF" "AUCH" "RAUS" USW..
+
+REIM 2 : GEN{GIN}
+"GEN" "BRENN" "SEND" "LENK" "WENN" "GEN{GIN}" "NIMM" "HIN" "SINN" "BIN" "DRIN" "BIN" "GING"
+
+Jetzt setze ich wieder zusammen:
+
+"TAUB BIN" "RAUS GING" "STAUB DRIN" "LAUF BIN" "KAUF NIMMT"
+
+DIESE WÖRTER REIMEN SICH WIEDERRUM AUF
+
+BRAUCHEN, SAUFEN, LAUFEN, KAUFEN, STAUNEN,
+
+UND DA DIE ZEILE JA IMMER MIT DEM REIMWORT BEENDET WERDEN MUSS GIBT ES NUR EINE BEGRENZTE ANZAHL AN MÖGLICHKEITEN WIE DU DEN SATZ ÜBERHAUPT BILDEN KANNST SO DASS ER GRAMMATIKALISCH RICHTIG IST UND DAS REIMWORT DAS LETZTE WORT DES SATZES ERGIBT. DESWEGEN IST ESSENTIELL IST IMMER DARAUF ZU ACHTEN DASS DAS REIMWORT DAS LETZTE WORT DER ZEILE BZW DER BAR IST UND AUF DER ZÄHLZEIT LIEGT.
+
+UND DAS IST EIGENTLICH BEI FAST ALLEN WÖRTERN SO
+
+UNTEN : RUND SIND
+
+ANFANG : HAND NAHM
+
+ELTERN : SELBST AN
+
+AUGEN : RAUS GING
+
+EHRLICH : WEHR DICH
+
+MENSCHEN : BRENN' IN
+
+Hier ist die vollständige Transkription der drei Textseiten aus den Bildern:
+
+IMMER : NICHT MAL
+
+SPINNER : SINN MACHT
+
+BOXEN : BLOND SIND
+
+SCHEISSEN : SCHEIS DRIN
+
+ES GIBT ABER AUCH DREI SILBIGE ODER VIERSILBIGE DIE WIEDERUM AUF DIESE WÖRTER REIMEN BEISPIELSWEISE
+
+UNTEN: RUND SIND: VERWUNDET:
+
+ANFANG: HAND NAHM : RISKANT WARN: VERBRANNT HABN"
+
+AUGEN: DRAUF BIN: VERLAUFEN
+
+EHRLICH: WERDE ICH: GEFÄHRLICH
+
+MENSCHEN: BRENN IN : VERLETZEN
+
+IMMER: NICHT MAL: VERHINDERT: BEHINDERT
+
+SPINNER: SINN MACHT: VERKLICKERT (DAS IST EIGENTLICH DERSELBE REIM WIE "IMMER")
+
+SCHEISSEN: SCHEIS DRIN: VERWEISEN: ENTSCHEIDEN: GEMEIN SIND
+
+---
+
+SO DANN GIBT ES NOCH DIESE ART REIME
+
+TASCHEN DIEB
+
+MASKE AN
+
+WEINE NICHT
+
+RATTE IST
+
+HAMSTER RAD
+
+KEINE ZEIT
+
+SELBE NACHT
+
+DIE SETZEN SICH DANN IMMER AUS SO EINEM REIMWORT WIE WIR GERADE AUSEINANDER GENOMMEN HABEN ZUSAMMEN UND EINE EINZELNE SILBE ALSO
+
+* TASCH EN DIEB
+* LACH EN SIEHT
+* ALL ES GIEBT
+* AN GE ZIELT
+* RATT EN SIEHT
+* PASS EN SIE
+* HAND HIN HIELT
+
+WICHTIG IST DASS SICH DIE ERSTE UND DIE LETZTE SILBE REIMT
+
+---
+
+-MAS KE AN
+-LACH EN KANN
+-AN GE FANG
+-SA GEN KANN
+-WARTE MAN
+-GEDANKENGANG
+-ATMEN AN
+
+THEORETISCH KÖNNTE MAN EIN WORT WIE "HAMST ER RAD" AUCH IRGENDWO BEI "MASKE AN" NOTIEREN WEIL DAS WORT "MASKE" UNMITTELBAR MIT DEM WORT"HAMSTER" NOTIERT SEIN SOLLTE, GENAUSO WIE DAS WORT "AN" UND "RAD"
+
+AUCH WENN SICH BEISPIELSWEISE "MASKE AN" UND "HAMSTERRAD" NICHT DIREKT REIMEN WÜRDE SICH BEISPIELSWEISE EIN WORT WIE "ANGEFANG" AUF "MASKE AN" ABER AUCH AUF "ALLE RAN" REIMEN, UND "ALLE RAN" WÜRDE SICH DANN WIEDER UNMITTELBAR AUF "HAMSTERRAD" REIMEN.
+
+DAS WÄRE MEINE ARGUMENTATION WARUM ES SINNVOLL WÄRE DIESE REIME BEIEINANDER ZU NOTIEREN.
+
+DANN FINDE ICH MEISTENS SÄTZE BZW ZEILEN DIE MAXIMAL 14 BIS 16 SILBEN LANG SIND UND MIT DEM REIMWORT BEENDET WERDEN
+
+"MASKE AN"
+WIESO VERDAMMT HAT JEDER NE' MASKE AN
+
+Hier ist die Transkription der beiden Textseiten aus den Bildern:
+
+"LACHEN KANN"
+DU BIST STARK WENN DU BEI ALL DEM SCHEISS NOCH LACHEN KANNST
+
+"ANGEFANG"
+SAG WANN HAT ES ANGEFANG'
+
+"GEDANKENGANG"
+PING PONG IM GEDANKENGANG
+
+"ALLE RAN"
+KRISEN NEHME ICH ALLE RAN
+
+"ATMEN AN"
+DOCH ICH FANG MIT DEM ATMEM AN
+
+NOCH MAL ZUM VERSTÄNDNIS
+
+DU HAST DEINEN SATZ DER SO AUSGEDRÜCKT IST
+
+"BRUDER BITTE WEINE DOCH NICHT"
+
+DANN CHECKST DU AHA: DAS DOCH IST DER ÜBELTÄTER! FORMULIERE UM AUF : "BRUDER WEINE NICHT"
+
+WEIL AUF WEINE NICHT KANNST DU WIEDER ZUSAMMENSETZEN
+
+---
+
+WEIL AUF WEINE NICHT KANNST DU WIEDER ZUSAMMENSETZEN
+
+* WEINE NICHT
+REIM 1 : WEINE
+
+"WEINE, TREIBE, ZEITEN, BLEIBE, GREIFEN, SEIDE, SCHREIBE, KEINE(N)
+
+(IN SO EINEM FALL PASSEN SOWOHL WEINE ALS AUCH WEINEN GENAUSO WIE TREIBE TREIBEN ODER BLEIBE BLEIBEN GREIFE GREIFEN**ALSO ALS MÖGLICHKEIT DEIN REIMPORT ZU BILDEN BSP : GREIFEN DICH - GREIFE DICH, REIMT SICH BEIDES AUF WEINE NICHT**)
+
+REIM 2 : NICHT
+
+"NICHT, DICHT, BIST, LIST, SCHICK, TRICK, TRIX, KICK, SICHT, SCHICHT, GIBT" USW.
+
+ZUSAMMENGESETZTE:
+
+LEITEN BIST, STREITEN SICH, KEINEN GIBT SCHREIBE ICH, GREIFEN DICH, BLEIBEN NICHT,SCHEISSE FRISST WEISS ES NICHT, EIGENTLICH, BEINE BRICHT, WEISSES LICHT ABER AUCH WÖRTER WIE ENTSCHEIDEND IST ODER VERTEIDIGT SICH ODER ERWEISEN SICH PASSEN AUCH.
+
+Hier ist die Transkription der beiden Textseiten aus den Bildern:
+
+SO WENN DU DIE REIMWÖRTER HAST CHECKST DU OB DU SYNTAX UND SATZBAU RICHTIG SO GEBILDET WERDEN KANN UND FÄNGST AN MIT JEDEM REIMWORT EINE ZEILE BZW EINEN SATZ ZU KREIEREN
+
+REIMSCHEMA IST VORERST VÖLLIG UNWICHTIG DENN BEI DIESER ART REIME IST ES WICHTIG EINFACH NUR EINEN GRAMMATIKALISCH RICHTIGEN SATZ IN KURZER FORM MAXIMAL 14 BIS 16 SILBEN ZU FINDEN. MANCHMAL SIND AUCH WÖRTER DABEI DIE NUR ALS KONJUNKTION BZW ALS WEITERFÜHRENDER SATZ DIENEN UND MIT DIESEN SILBEN KANNST DU DANN VERSCHIEDENE SATZFRAGMENTE FINDEN UND DIESE ALS ANFANG NUTZEN.
+
+SPIEL FINDE ICH JETZT AUF DAS REIMWORT ZU WEINEN NICHT ZU JEDEM WORT EIN SATZ DER MIR EINFÄLLT
+
+"WEINE NICHT
+EGAL WAS AUCH PASSIERT BITTE WEINE NICHT
+
+""WEISSES LICHT"
+EGAL WIE DUNKEL, IRGENDWANN SCHEINT WEISSES LICHT
+
+"WEISST ES NICHT"
+WANN, NEIN DU WEISST ES NICHT?
+
+"BLEIBEN NICHT"
+ABER WAS DU WEISST, SIE BLEIBEN NICHT
+
+---
+
+"LEITEN BIST"
+WENN DU DEINEN KOPF AM LEITEN BIST
+
+"ENTSCHEIDEND IST"
+WEISST DU WAS ENTSCHEIDEND IST
+
+"BEINE BRICHT"
+AUFSTEHEN WENN MAN BEINE BRICHT.
+
+"STREITEN SICH"
+WIE ZU VIELE STREITEN SICH
+
+"GREIFEN DICH"
+ABFACKS DIKKA GREIFEN DICH
+
+"EIGENTLICH"
+KEINE AHNUNG EIGENTLICH
+
+## "SCHEISSE FRISST"
+WENN DU ALL DIE SCHEISSE FRISST
+
+
+Hier ist die vollständige Transkription der beiden Bilder:
+
+GENAUSO WIE BEI RATTE IST
+
+REIMWORT : RATTE IST
+
+1 RATTE, PATE, LACHE, HATTE, SACHE, KRACHE, SCHLANGE, ALLE , MASKE UND SO WEITER
+
+2 IST, LICHT, NICHT, BRICHT, SICHT, BISS, KRIEGST, FICKST, NIX, GIFT, BIST SO WEITER
+
+ZUSAMMENGESETZTE:
+
+SCHLANGE IST, SCHLANGENBISS, PATTE KRIEGST, HATTE NICHTS, ALLE FICKST, MASKE BRICHT, ALLES NICHT, WARTE NICHT, RATTENGIFT, LACHEN GIBT
+
+WÖRTER WIE WAHNSINNIG REIMEN SICH HIER AUCH
+
+DANN FINDE ICH WIEDER SÄTZE DIE MIT DEM REIMWORT BEENDET WERDEN UND MAXIMAL 14 BIS 16 SILBEN LANG SIND
+
+"SCHLANGE IST"
+SAG MIR WER NE SCHLANGE IST
+
+"MASKE BRICHT"
+WENN DEINE MASKE BRICHT
+
+"RATTE BIST"
+SIEHT MAN DASS DU NE' RATTE BIST
+
+"PATTE KRIEGST"
+DU BIST NICHT BESSER WENN DU PATTE KRIEGST
+
+---
+
+"PATTE KRIEGST"
+DU BIST NICHT BESSER WENN DU PATTE KRIEGST
+
+"LACHEN GIBT"
+DENN WENN ES NICHTS ZU LACHEN GIBT
+
+"WAHNSINNIG"
+WIRST DU WIRST DU WAHNSINNIG
+
+
+
