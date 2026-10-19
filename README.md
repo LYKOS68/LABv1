@@ -24,8 +24,10 @@ This project is Source-Available under Polyform Noncommercial 1.0.0
 Für kommerzielle Nutzung: roman.hild4@gmail.com
 
 ### Stack
-Go fungiert als zentraler Orchestrator, der das Frontend über HTML-Vorlagen steuert, die Geschäftslogik verarbeitet und die Datenbankabfragen koordiniert.
-/ [dein Stack hier] /
+- Go 1.27 (Orchestrator, HTTP-Server, Geschäftslogik)
+- PostgreSQL (via pgx/v5)
+- HTML-Vorlagen (Frontend, geplant)
+- Git / GitHub
 ### Owner
 Roman Hild (LYKOS68) - https://github.com/LYKOS68
 

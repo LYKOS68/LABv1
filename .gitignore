@@ -2,3 +2,5 @@
 !/__hub-docs/.gitignore
 !/__hub-docs/.gitkeep
 
+.env
+*.exe
