@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"embed"
 	"fmt"
 	"net/http"
 	"os"
@@ -9,8 +10,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/LYKOS68/lab-studio/internal/handlers"
+	"github.com/LYKOS68/lab-studio/internal/store"
 )
+
+//go:embed migrations/001_init.sql
+var migrationsFS embed.FS
 
 func main() {
 	dsn := os.Getenv("DATABASE_URL")
@@ -20,18 +26,30 @@ func main() {
 	}
 
 	ctx := context.Background()
-	conn, err := pgx.Connect(ctx, dsn)
+	pool, err := pgxpool.New(ctx, dsn)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "connect: %v\n", err)
+		fmt.Fprintf(os.Stderr, "pool: %v\n", err)
 		os.Exit(1)
 	}
-	defer conn.Close(ctx)
+	defer pool.Close()
 
-	if err := conn.Ping(ctx); err != nil {
+	if err := pool.Ping(ctx); err != nil {
 		fmt.Fprintf(os.Stderr, "ping: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Println("postgres: ping ok")
+
+	sqlBytes, err := migrationsFS.ReadFile("migrations/001_init.sql")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "migration read: %v\n", err)
+		os.Exit(1)
+	}
+	if _, err := pool.Exec(ctx, string(sqlBytes)); err != nil {
+		fmt.Fprintf(os.Stderr, "migration: %v\n", err)
+		os.Exit(1)
+	}
+
+	st := store.New(pool)
+	h := &handlers.Handlers{Store: st}
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -43,9 +61,9 @@ func main() {
 		fmt.Fprintln(w, "RAP-LAB OK")
 	})
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
-		ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+		c, cancel := context.WithTimeout(r.Context(), 2*time.Second)
 		defer cancel()
-		if err := conn.Ping(ctx); err != nil {
+		if err := pool.Ping(c); err != nil {
 			w.WriteHeader(http.StatusServiceUnavailable)
 			fmt.Fprintf(w, "postgres: %v\n", err)
 			return
@@ -53,6 +71,11 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintln(w, "postgres: ok")
 	})
+	mux.HandleFunc("POST /register", h.Register)
+	mux.HandleFunc("POST /login", h.Login)
+	mux.HandleFunc("GET /profile/{id}", h.Profile)
+	mux.HandleFunc("GET /offerings", h.Offerings)
+	mux.HandleFunc("GET /me", h.Me)
 
 	srv := &http.Server{
 		Addr:    ":" + port,

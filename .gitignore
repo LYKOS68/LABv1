@@ -1,6 +1,7 @@
 /__hub-docs/*
 !/__hub-docs/.gitignore
 !/__hub-docs/.gitkeep
-
+!/my-space/.gitignore
+!/.env/.gitignore
 .env
 *.exe
