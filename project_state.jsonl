@@ -1,0 +1,2 @@
+<!-APPEND-ONLY-!>
+{"timestamp":"2026-10-20","project":"RAP-LAB","state":"MVP implemented (users, profiles, offerings, sessions)","deployment":"local windows, go run cmd/lab-studio/main.go, port 8080","context":"PostgreSQL raplab connected, migrations applied, HTTP routes active","git":"03345d5"}
