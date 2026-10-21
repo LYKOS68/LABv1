@@ -1,7 +1,7 @@
 # push-main.ps1
 # Ersetzt den main-Branch auf GitHub vollstaendig durch den lokalen Stand.
 # Vorher wird der alte GitHub-Stand als Tag "backup-main-<Datum>" gesichert.
-# Starten: Doppelklick auf push-main.cmd
+# Starten: siehe README.md
 
 $ErrorActionPreference = "Continue"  # Git-Fehler werden ueber $LASTEXITCODE geprueft
 $root = Resolve-Path (Join-Path $PSScriptRoot "..\..")
