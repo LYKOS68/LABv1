@@ -29,12 +29,11 @@ one_shots:
     ziel: ".docs/issues_state.jsonl"
     ausloeser: "Fehler und Probleme aus den letzten Nachrichten festhalten"
     prompt: |
-      Append new lines to `.docs/issues_state.jsonl` (append-only, never edit or delete existing lines). The file's first line must remain `<!-APPEND-ONLY-!>`.
+      Append one new line to `.docs/issues_state.jsonl` (append-only, never edit or delete existing lines). The file's first line must remain `<!-APPEND-ONLY-!>`.
       Audience: the next CLI model that continues this work with Roman, not Roman. Write machine-oriented: short fragments, no prose, no greetings, no explanations.
       Sources, in this order: (1) only the last 3 user messages of this chat; (2) the existing lines of `.docs/issues_state.jsonl`. Extract only errors and problems Roman explicitly names; do not interpret, infer, add, or include comments, wishes, or praise. Skip any problem already recorded. If no new problem is found, append nothing and say so. Do not read other files.
-      One JSON object per problem, each on its own line, fields (strings):
-      timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier lines), environment (agent/CLI and OS), path (absolute working directory), issue (the problem in one short fragment, in Roman's terms), quote (short verbatim excerpt from Roman's message).
-      Validate each line as JSON before appending. Do not modify any other file. Print the appended lines.
+      One JSON object per run, on one line. Metadata once per line: timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier lines), environment (agent/CLI and OS), path (absolute working directory). Then `issues`: array with one object per problem, fields: issue (the problem in one short fragment, in Roman's terms), quote (short verbatim excerpt from Roman's message).
+      Validate the line as JSON before appending. Do not modify any other file. Print the appended line.
 
   - id: "03"
     name: "handoff"
@@ -49,18 +48,29 @@ one_shots:
       Validate the line as JSON before appending. Do not modify any other file. Print the appended line.
 
   - id: "04"
-    name: "<NAME>"
-    ziel: "<PFAD>"
-    ausloeser: "<WANN>"
+    name: "to-dos"
+    ziel: ".docs/to-dos.jsonl"
+    ausloeser: "Idee, Vorhaben oder Aufgabe festhalten, egal ob jetzt oder langfristig; Status aendern"
     prompt: |
-      <PROMPT>
+      Append one new line to `.docs/to-dos.jsonl` (append-only, never edit or delete existing lines). The file's first line must remain `<!-APPEND-ONLY-!>`.
+      Audience: the next CLI model that continues this work with Roman, not Roman. Write machine-oriented: short fragments, no prose, no greetings, no explanations.
+      Sources, in this order: (1) the last 10-15 user and assistant turns of this chat, both directions; (2) the existing lines of `.docs/to-dos.jsonl`. Record only ideas, plans and tasks Roman explicitly names, or assistant proposals Roman explicitly accepted. Do not interpret, infer, split, merge, prioritize, or add your own ideas. Skip items already recorded with the same content. Mark anything unclear as `LÜCKE`. Do not read other files.
+      Status change: if Roman marks an existing to-do as done or dropped, add an item with the same id and the new status in the new line; never change old lines. The latest item per id is its current status.
+      If nothing new is found, append nothing and say so.
+      One JSON object per run, on one line. Metadata once per line: timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier lines), environment (agent/CLI and OS), path (absolute working directory). Then `items`: array with one object per to-do, fields (strings or arrays of short strings): id (`T` + 3 digits, next free number across all existing items; reuse only for status changes), type (`idee` or `aufgabe`), status (`offen`, `erledigt` or `verworfen`), title (one short fragment), details (criteria, constraints, steps exactly as stated), refs (related paths or ids named in the sources), quote (short verbatim excerpt from Roman's message).
+      Validate the line as JSON before appending. Do not modify any other file. Print the appended line.
 
   - id: "05"
-    name: "<NAME>"
-    ziel: "<PFAD>"
-    ausloeser: "<WANN>"
+    name: "user-profil"
+    ziel: ".docs/user-profil.yaml"
+    ausloeser: "Relevante Infos ueber Roman festhalten: wer, was, wie, Erkenntnisse"
     prompt: |
-      <PROMPT>
+      Append one new block to the `eintraege:` list at the end of `.docs/user-profil.yaml` (append-only, never edit or delete existing blocks, never change the header or `schema:`). The file's first line must remain `# <!-APPEND-ONLY-!>`.
+      Audience: the next CLI model that works with Roman, not Roman. Write machine-oriented: short fragments, no prose, no greetings, no explanations.
+      Sources, in this order: (1) the last 10-15 user and assistant turns of this chat, both directions; (2) the existing entries of `.docs/user-profil.yaml`. Record only information about Roman that changes how a model should work with him: who he is, what he does, how he works, preferences, skill level, insights. Each entry needs a verbatim quote from Roman as evidence. `art: aussage` only if Roman states it himself; `art: beobachtung` only if his own messages directly show it. Do not interpret, psychologize, generalize, or add assumptions. Skip trivia, one-off moods, praise, and anything already recorded. Never record secrets, credentials, contact data, health, or other sensitive personal data. Do not read other files.
+      If nothing new is found, append nothing and say so.
+      One block per run: a YAML list item indented 2 spaces under `eintraege:`, all values as double-quoted strings. Metadata once per block: timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier blocks), environment (agent/CLI and OS), path (absolute working directory). Then `infos:` with one list item per info, fields: kategorie (`identitaet`, `taetigkeit`, `arbeitsweise`, `praeferenz`, `kenntnisstand` or `erkenntnis`), art (`aussage` or `beobachtung`), info (one short fragment), beleg (short verbatim quote from Roman). Follow the indentation of existing blocks exactly.
+      Validate the whole file as YAML after appending. Do not modify any other file. Print the appended block.
 
   - id: "06"
     name: "<NAME>"
@@ -112,6 +122,20 @@ one_shots:
       <PROMPT>
 
   - id: "13"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "14"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "15"
     name: "<NAME>"
     ziel: "<PFAD>"
     ausloeser: "<WANN>"

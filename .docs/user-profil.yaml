@@ -1,0 +1,41 @@
+# <!-APPEND-ONLY-!>
+# Nutzerprofil Roman. Neue Bloecke nur unten an "eintraege" anhaengen,
+# bestehende Bloecke nie aendern oder loeschen.
+
+schema:
+  timestamp: "ISO 8601 Datum und Uhrzeit, einmal pro Block"
+  model: "exakter Modellname und ID des eintragenden Modells, einmal pro Block"
+  environment: "Agent/CLI und Betriebssystem, einmal pro Block"
+  path: "absoluter Arbeitsordner, einmal pro Block"
+  infos:
+    kategorie: "identitaet | taetigkeit | arbeitsweise | praeferenz | kenntnisstand | erkenntnis"
+    art: "aussage (Roman sagt es selbst) | beobachtung (im Chat direkt belegt)"
+    info: "ein kurzes Fragment"
+    beleg: "kurzes woertliches Zitat aus Romans Nachricht"
+
+eintraege:
+  - timestamp: "2026-10-21T21:01:42+02:00"
+    model: "Claude Opus 5.5 (claude-opus-5-5)"
+    environment: "Claude Code CLI, win32"
+    path: "C:/Users/RPC/Documents/GitHub/LABv1"
+    infos:
+      - kategorie: "identitaet"
+        art: "aussage"
+        info: "Name Roman Hild"
+        beleg: "full_name: Roman Hild"
+      - kategorie: "identitaet"
+        art: "aussage"
+        info: "Kuenstlername LYKOS"
+        beleg: "artist_name: LYKOS"
+      - kategorie: "identitaet"
+        art: "aussage"
+        info: "GitHub-Account LYKOS68"
+        beleg: "github: LYKOS68"
+      - kategorie: "identitaet"
+        art: "aussage"
+        info: "Wohnort Mannheim, Deutschland"
+        beleg: "city: Mannheim,68 DEUTSCHLAND"
+      - kategorie: "taetigkeit"
+        art: "aussage"
+        info: "Ausbildung Fachkraft fuer Lagerlogistik bei Raben Group"
+        beleg: "beruf: Ausbildung als Fachkraft für Lagerlogistik bei Raben Group"
