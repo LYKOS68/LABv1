@@ -3,5 +3,7 @@
 !/__hub-docs/.gitkeep
 !/my-space/.gitignore
 !/.env/.gitignore
+!/.claude/.gitignore
 .env
 *.exe
+/.claude/settings.beispiel.jsonc
