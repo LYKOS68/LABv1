@@ -48,7 +48,7 @@
 - `.docs/` (`project_state.jsonl`): Projektdokumente wie Kontext, Regeln und Tools.
 - `.github/` (`workflows/ci.yml`)
 - `cmd/` (`lab-studio/main.go`, `lab-studio/migrations/001_init.sql`)
-- `__hub-docs/` (`TECH-STACK.yaml`)
+- `__hub-docs/`
 
 (3) `internal/` (`handlers/handlers.go`, `store/store.go`) ist mit `cmd/` verbunden. Änderungen dort, die `cmd/` betreffen, nur nach {Freigabe} für `cmd/`.
-(4) Nie auf nicht vorhandenen Dateien weiterarbeiten und vorhandenen Code nie neu oder in einem anderen Tech-Stack generieren. Den Tech-Stack nur aus dem nach {Freigabe} gelesenen `go.mod` oder `__hub-docs/TECH-STACK.yaml` übernehmen, sonst {LÜCKE}.
+(4) Nie auf nicht vorhandenen Dateien weiterarbeiten und vorhandenen Code nie neu oder in einem anderen Tech-Stack generieren. Den Tech-Stack nur aus dem nach {Freigabe} gelesenen `go.mod` oder `.docs/TECH-STACK.md` übernehmen, sonst {LÜCKE}.
