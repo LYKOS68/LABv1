@@ -1,0 +1,92 @@
+# One-Shot-Entwuerfe
+# Neuen Entwurf anlegen: einen Platzhalter unten ausfuellen.
+# Verwenden: den Text unter "prompt" komplett in den Chat kopieren.
+
+schema:
+  id: "Laufende Nummer, zweistellig (01, 02, ...)"
+  name: "Kurzer Name, klein mit Bindestrichen"
+  ziel: "Datei, die der One-Shot liest oder schreibt (relativer Pfad)"
+  ausloeser: "Wann du ihn verwendest"
+  prompt: "Der vollstaendige Prompt, den du in den Chat kopierst"
+
+one_shots:
+
+  - id: "01"
+    name: "draft-sichern"
+    ziel: ".docs/.one-shots/one-shots-drafts.yaml"
+    ausloeser: "Letzten One-Shot-Entwurf der CLI aus dem Chat als Entwurf festhalten"
+    prompt: |
+      Add your most recent one-shot draft from this chat as one entry to `.docs/.one-shots/one-shots-drafts.yaml`. Fill the first placeholder entry (the one with name `<NAME>`), keeping its id; if no placeholder is left, append a new entry at the end with the next free two-digit id. Never edit or delete other entries, never change the header or `schema:`.
+      If the file is missing, create it with the header and `schema:` of `.docs/.one-shots/one-shots.yaml` and an empty `one_shots:` list.
+      Source: only your own last proposed one-shot in this chat. Copy it verbatim, do not improve, shorten, or translate it. Fields: name, ziel (output path of the one-shot), ausloeser, prompt. Mark anything unclear as `LÜCKE`. If this chat contains no one-shot proposed by you, change nothing and say so.
+      Follow the indentation of existing entries exactly. Validate the whole file as YAML afterwards. Do not modify any other file. Print the written entry.
+
+  - id: "02"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "03"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "04"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "05"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "06"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "07"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "08"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "09"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "10"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "11"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
