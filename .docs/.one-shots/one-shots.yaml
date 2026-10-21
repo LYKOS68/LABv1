@@ -1,0 +1,119 @@
+# One-Shot-Sammlung
+# Neuen One-Shot anlegen: einen Platzhalter unten ausfuellen.
+# Verwenden: den Text unter "prompt" komplett in den Chat kopieren.
+
+schema:
+  id: "Laufende Nummer, zweistellig (01, 02, ...)"
+  name: "Kurzer Name, klein mit Bindestrichen"
+  ziel: "Datei, die der One-Shot liest oder schreibt (relativer Pfad)"
+  ausloeser: "Wann du ihn verwendest"
+  prompt: "Der vollstaendige Prompt, den du in den Chat kopierst"
+
+one_shots:
+
+  - id: "01"
+    name: "project-state"
+    ziel: ".docs/project_state.jsonl"
+    ausloeser: "Projektstand nach einer Arbeitsphase festhalten"
+    prompt: |
+      Append one new line to `.docs/project_state.jsonl` (append-only, never edit or delete existing lines). The file's first line must remain `<!-APPEND-ONLY-!>`.
+      Audience: the next CLI model that continues this work with Roman, not Roman. Write machine-oriented: short fragments, no prose, no greetings, no explanations, nothing derivable from the repo.
+      Sources, in this order: (1) the last 10-15 user and assistant turns of this chat, both directions; (2) the last line of `.docs/project_state.jsonl`, if any; (3) `git rev-parse --short HEAD`. Later turns override earlier ones. Use only facts evidenced in these sources; mark anything missing or unclear as `LÜCKE`. Do not read other files to fill fields.
+      If the project state is unchanged since the last line, append nothing and say so.
+      One JSON object, fields (strings):
+      timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier lines), environment (agent/CLI and OS), path (absolute working directory), project, state (what exists and works, with `UNVERIFIED` where unchecked), deployment (how and where it runs), context (constraints and open points relevant for the next model), git (short commit hash).
+      Validate the line as JSON before appending. Do not modify any other file. Print the appended line.
+
+  - id: "02"
+    name: "issues-state"
+    ziel: ".docs/issues_state.jsonl"
+    ausloeser: "Fehler und Probleme aus den letzten Nachrichten festhalten"
+    prompt: |
+      Append new lines to `.docs/issues_state.jsonl` (append-only, never edit or delete existing lines). The file's first line must remain `<!-APPEND-ONLY-!>`.
+      Audience: the next CLI model that continues this work with Roman, not Roman. Write machine-oriented: short fragments, no prose, no greetings, no explanations.
+      Sources, in this order: (1) only the last 3 user messages of this chat; (2) the existing lines of `.docs/issues_state.jsonl`. Extract only errors and problems Roman explicitly names; do not interpret, infer, add, or include comments, wishes, or praise. Skip any problem already recorded. If no new problem is found, append nothing and say so. Do not read other files.
+      One JSON object per problem, each on its own line, fields (strings):
+      timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier lines), environment (agent/CLI and OS), path (absolute working directory), issue (the problem in one short fragment, in Roman's terms), quote (short verbatim excerpt from Roman's message).
+      Validate each line as JSON before appending. Do not modify any other file. Print the appended lines.
+
+  - id: "03"
+    name: "handoff"
+    ziel: ".docs/handoff_state.jsonl"
+    ausloeser: "Vor Session-Ende, CLI- oder Account-Wechsel; beliebig oft"
+    prompt: |
+      Append one new line to `.docs/handoff_state.jsonl` (append-only, never edit or delete existing lines). The file's first line must remain `<!-APPEND-ONLY-!>`. Always append a new snapshot, even if earlier lines cover the same task.
+      Audience: the next CLI model that continues this work with Roman, not Roman. Write machine-oriented: short fragments and imperatives, no prose, no greetings, no explanations, nothing derivable from the repo.
+      Sources, in this order: (1) the last 10-15 user and assistant turns of this chat, both directions; (2) the last line of `.docs/handoff_state.jsonl`, if any, for continuity; (3) `git rev-parse --short HEAD`, `git branch --show-current`, `git status --short`. Later turns override earlier ones; move superseded decisions to `rejected`. Use only facts evidenced in these sources; mark anything missing or unclear as `LÜCKE`. Do not read other files to fill fields.
+      One JSON object, fields (strings or arrays of short strings):
+      timestamp (ISO 8601 date and time), model (your exact current model name and ID; never guess, never copy from earlier lines), environment (agent/CLI and OS), path (absolute working directory), git (short commit hash), branch, worktree (clean or changed paths), task (current assignment), done_when (acceptance criteria), done (completed steps with evidence), next (next concrete steps, in order), decisions (valid decisions with one-word reason), rejected (discarded approaches or superseded decisions), files (relevant `path:lines`, only paths named in the sources), approvals (approvals Roman granted that still apply), unverified (claims not yet checked), gaps (open `LÜCKE`s and questions to Roman), style (Roman's rules for language, answer format, detail depth).
+      Validate the line as JSON before appending. Do not modify any other file. Print the appended line.
+
+  - id: "04"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "05"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "06"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "07"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "08"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "09"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "10"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "11"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "12"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
+
+  - id: "13"
+    name: "<NAME>"
+    ziel: "<PFAD>"
+    ausloeser: "<WANN>"
+    prompt: |
+      <PROMPT>
