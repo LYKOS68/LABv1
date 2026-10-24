@@ -1,17 +1,34 @@
 {{define "content"}}
-<section class="hero" aria-labelledby="hero-titel">
-  {{/* Der Schriftzug steckt im Hintergrundbild; der Titel bleibt für Screenreader und Suchmaschinen als Text */}}
-  <h1 id="hero-titel" class="visually-hidden">RAP-LAB</h1>
-  <p class="hero__tagline">Ein Ort für das, was zwischen Idee und Musik passiert.</p>
-  <p class="hero__claims">
-    <span>Musik entwickeln.</span>
-    <span>Menschen finden.</span>
-    <span>Zusammenarbeiten.</span>
-    <span>Weiterkommen.</span>
-  </p>
+<section class="hero" id="start" aria-labelledby="hero-titel">
+  <h1 id="hero-titel" class="visually-hidden">RAP-LAB – Netzwerk für Musikschaffende</h1>
+
+  {{/* Der Schriftzug steckt im Bild; der Hero gibt ihm die volle Fläche statt es hinter Text zu dimmen */}}
+  <div class="hero__art">
+    <picture>
+      <source srcset="/static/img/hintergrund-1672.webp" type="image/webp">
+      <img src="/static/img/hintergrund-1672.jpg" width="1672" height="941" fetchpriority="high" decoding="async"
+           alt="Goldener RAP-LAB Schriftzug auf dunklem Leder, von grünem Neonlicht hinterlegt">
+    </picture>
+  </div>
+
+  <div class="hero__copy">
+    <p class="hero__kicker"><span>Vernetzung für Musikschaffende</span></p>
+    <p class="hero__tagline">Ein Ort für das, was zwischen Idee und Musik passiert.</p>
+    <p class="hero__claims">
+      <span>Musik entwickeln.</span>
+      <span>Menschen finden.</span>
+      <span>Zusammenarbeiten.</span>
+      <span>Weiterkommen.</span>
+    </p>
+    <div class="hero__actions">
+      <a class="button button--primary" href="#registrieren" data-open-register>Konto erstellen</a>
+      <a class="hero__more" href="#warum">Warum RAP-LAB</a>
+    </div>
+  </div>
 </section>
 
-<section class="pitch" aria-label="Warum RAP-LAB">
+<section class="pitch" id="warum" aria-labelledby="warum-titel">
+  <h2 id="warum-titel" class="visually-hidden">Warum RAP-LAB</h2>
   <div class="pitch__body">
     <p class="pitch__intro">Denn mal ehrlich:</p>
     <p class="pitch__lines">

@@ -2,37 +2,12 @@
    Vorbild ist der Handy-Screenshot; am Computer bleibt die Reihenfolge gleich,
    nur Breiten und Schriftgrößen wachsen mit. */
 
-.site-header {
-  border-bottom: 1px solid var(--border);
+:root {
+  --header-h: 76px;
 }
 
-.site-header__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: calc(var(--space) * 11);
-  padding: 0 calc(var(--space) * 3);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: calc(var(--space) * 2) calc(var(--space) * 3);
-}
-
-.hero {
-  /* Hero füllt den ersten Bildschirm, damit der Text darunter erst beim Scrollen kommt wie im Vorbild */
-  min-height: calc(100vh - var(--space) * 11);
-  /* Texte im unteren Teil, damit oben der Schriftzug aus dem Hintergrund frei steht */
-  padding: calc(var(--space) * 8) calc(var(--space) * 3) calc(var(--space) * 10);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: center;
-  gap: calc(var(--space) * 5);
-}
-
-/* Ein einziges Hintergrundbild für die ganze Seite. Es steht fest im Fenster,
-   damit beim Scrollen nur der Inhalt wandert und das Leder ruhig bleibt. */
+/* Leder liegt als ruhige Fläche hinter dem Inhalt unterhalb des Hero.
+   Das Hero-Bild bringt seinen eigenen Schriftzug mit, deshalb ist diese Fläche blass. */
 body {
   position: relative;
   isolation: isolate;
@@ -44,19 +19,136 @@ body::before {
   inset: 0;
   z-index: -1;
   background-image: image-set(
-    url("../img/hintergrund-1672.webp") type("image/webp"),
-    url("../img/hintergrund-1672.jpg") type("image/jpeg")
+    url("../img/leather-manifesto.webp") type("image/webp"),
+    url("../img/leather-manifesto.jpg") type("image/jpeg")
   );
   background-size: cover;
   background-position: center;
-  /* Blasser, damit Schrift und Schriftzug darüber klar vorne liegen */
-  opacity: 0.28;
+  opacity: 0.16;
 }
 
+/* --- Kopfleiste ------------------------------------------------ */
 .site-header {
-  background: color-mix(in oklch, var(--ink-50) 70%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid color-mix(in oklch, var(--gold-400) 22%, transparent);
+  background: color-mix(in oklch, var(--ink-50) 82%, transparent);
+  backdrop-filter: blur(16px) saturate(1.2);
 }
 
+.site-header__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  min-height: var(--header-h);
+  padding: 0 calc(var(--space) * 3);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--space) * 2);
+}
+
+.site-nav {
+  display: none;
+  align-items: center;
+  gap: calc(var(--space) * 3);
+  margin-left: calc(var(--space) * 2);
+}
+
+@media (min-width: 960px) {
+  .site-nav {
+    display: flex;
+  }
+}
+
+/* --- Hero ------------------------------------------------------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: calc(100svh - var(--header-h));
+  overflow: hidden;
+}
+
+/* Das Leder-Bild trägt den Schriftzug. Es liegt hinter dem Text und wird
+   nach unten weich in die Seitenfarbe gezogen, damit die Zeilen lesbar bleiben. */
+.hero__art {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+.hero__art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      var(--ink-50) 0%,
+      color-mix(in oklch, var(--ink-50) 82%, transparent) 32%,
+      transparent 74%
+    ),
+    radial-gradient(
+      120% 80% at 50% 8%,
+      transparent 45%,
+      color-mix(in oklch, var(--ink-0) 55%, transparent) 100%
+    );
+}
+
+.hero__copy {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: calc(var(--space) * 16) calc(var(--space) * 3) calc(var(--space) * 10);
+  display: grid;
+  justify-items: center;
+  gap: calc(var(--space) * 3);
+  text-align: center;
+}
+
+/* Unter 1100px steht das Bild über dem Text: im Hochformat würde "cover"
+   den Schriftzug an den Seiten abschneiden. */
+@media (max-width: 1099px) {
+  .hero {
+    display: block;
+    min-height: 0;
+  }
+
+  .hero__art {
+    position: relative;
+    inset: auto;
+  }
+
+  .hero__art img {
+    height: auto;
+    aspect-ratio: 1672 / 941;
+  }
+
+  .hero__art::after {
+    background: linear-gradient(
+      to bottom,
+      transparent 45%,
+      color-mix(in oklch, var(--ink-50) 85%, transparent) 84%,
+      var(--ink-50) 100%
+    );
+  }
+
+  .hero__copy {
+    position: relative;
+    margin-top: calc(var(--space) * -8);
+    padding: 0 calc(var(--space) * 3) calc(var(--space) * 10);
+  }
+}
+
+/* --- Leder-Abschnitt -------------------------------------------- */
 .pitch {
   padding: calc(var(--space) * 12) calc(var(--space) * 3) calc(var(--space) * 14);
 }

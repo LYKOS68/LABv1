@@ -1,12 +1,18 @@
 {{define "header"}}
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__logo" href="/" aria-label="RAP-LAB Startseite">
-      <picture>
+    <a class="brand" href="/" aria-label="RAP-LAB – Startseite">
+      <picture class="brand__mark">
         <source srcset="/static/img/krone-160.webp" type="image/webp">
-        <img src="/static/img/krone-160.jpg" width="56" height="56" alt="RAP-LAB Krone">
+        <img src="/static/img/krone-160.jpg" width="44" height="44" alt="" aria-hidden="true">
       </picture>
+      <span class="brand__name">RAP-LAB</span>
     </a>
+
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <a class="site-nav__link" href="#start" aria-current="page">Start</a>
+      <a class="site-nav__link" href="#warum">Warum RAP-LAB</a>
+    </nav>
 
     {{if .UserName}}
     <div class="auth-user">
@@ -17,31 +23,43 @@
     </div>
     {{else}}
     <div class="auth">
-      <form class="auth-login" method="post" action="/login">
-        <label class="visually-hidden" for="login-email">E-Mail</label>
-        <input class="input" id="login-email" name="email" type="email" autocomplete="email"
-               placeholder="E-Mail" value="{{.Login.Email}}" required
-               {{if .Login.Error}}aria-invalid="true" aria-describedby="login-error"{{end}}>
-        <label class="visually-hidden" for="login-password">Passwort</label>
-        <input class="input" id="login-password" name="password" type="password"
-               autocomplete="current-password" placeholder="Passwort" required>
-        <button class="button button--primary" type="submit">Anmelden</button>
-      </form>
+      {{/* details statt JavaScript: beide Felder klappen auch ohne Skript auf (TECH-STACK §1(4)) */}}
+      <details class="auth-panel">
+        <summary class="button button--text">Anmelden</summary>
+        <div class="auth-panel__body">
+          <form class="form" method="post" action="/login">
+            <h2 class="form__title">Willkommen zurück</h2>
 
-      {{/* details statt JavaScript: das Feld klappt auch ohne Skript auf (TECH-STACK §1(4)) */}}
-      <details class="auth-register"{{if .Register.Open}} open{{end}}>
-        <summary class="button button--text">Registrieren</summary>
-        <div class="auth-register__panel">
+            {{with .Login.Error}}<p class="form__error" role="alert">{{template "message" .}}</p>{{end}}
+
+            <div class="field">
+              <label class="field__label" for="login-email">E-Mail</label>
+              <input class="input" id="login-email" name="email" type="email" autocomplete="email"
+                     value="{{.Login.Email}}" required
+                     {{with .Login.Error}}aria-invalid="true"{{end}}>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="login-password">Passwort</label>
+              <input class="input" id="login-password" name="password" type="password"
+                     autocomplete="current-password" required
+                     {{with .Login.Error}}aria-invalid="true"{{end}}>
+            </div>
+
+            <button class="button button--primary button--block" type="submit">Anmelden</button>
+          </form>
+        </div>
+      </details>
+
+      <details class="auth-panel" id="registrieren"{{if .Register.Open}} open{{end}}>
+        <summary class="button button--primary">Registrieren</summary>
+        <div class="auth-panel__body">
           {{template "register-form" .Register}}
         </div>
       </details>
     </div>
     {{end}}
   </div>
-
-  {{with .Login.Error}}
-  <p class="auth-login__error" id="login-error" role="alert">{{template "message" .}}</p>
-  {{end}}
 </header>
 {{end}}
 

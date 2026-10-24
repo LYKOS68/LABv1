@@ -1,22 +1,161 @@
 /* Bausteine der Startseite. Gold für Labels und Textbuttons, Neon nur für Hauptaktionen und Fokus (TECH-STACK §8(3)). */
 
-/* --- Logo ------------------------------------------------------ */
-.site-header__logo {
+/* --- Marke in der Kopfleiste ----------------------------------- */
+.brand {
   display: inline-flex;
-  padding: 4px;
+  align-items: center;
+  gap: calc(var(--space) * 1.5);
+  padding: 4px 4px 4px 0;
   border-radius: var(--radius-md);
+  text-decoration: none;
+}
+
+.brand__mark img {
+  width: 44px;
+  height: 44px;
+  /* Das Logo-Foto hat reines Schwarz, die Seite warmes Schwarz: "screen" blendet das Quadrat aus */
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 10px color-mix(in oklch, var(--neon-400) 30%, transparent));
   transition: transform 200ms ease;
 }
 
-/* Das Logo-Foto hat reines Schwarz, die Seite warmes Schwarz: "screen" blendet das Quadrat aus */
-.site-header__logo img {
-  width: 56px;
-  height: 56px;
-  mix-blend-mode: screen;
+.brand__name {
+  color: var(--gold-300);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.site-header__logo:hover {
+.brand:hover .brand__mark img {
   transform: scale(1.06);
+}
+
+.brand:hover .brand__name {
+  color: var(--gold-200);
+}
+
+/* Auf sehr schmalen Geräten bleibt nur die Krone, damit die Anmeldeknöpfe passen. */
+@media (max-width: 419px) {
+  .brand__name {
+    display: none;
+  }
+}
+
+/* --- Navigation ------------------------------------------------- */
+.site-nav__link {
+  position: relative;
+  padding: calc(var(--space) * 1.5) 0;
+  color: var(--ink-500);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--space) * 0.75);
+  height: 1px;
+  background: var(--gold-400);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+
+.site-nav__link:hover {
+  color: var(--ink-900);
+}
+
+.site-nav__link:hover::after,
+.site-nav__link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.site-nav__link[aria-current="page"] {
+  color: var(--gold-300);
+}
+
+/* --- Anmelden und Registrieren ---------------------------------- */
+.auth {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  margin-left: auto;
+}
+
+.auth .button {
+  min-height: 44px;
+  padding: 0 calc(var(--space) * 2);
+  font-size: 0.75rem;
+}
+
+.auth-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  margin-left: auto;
+}
+
+.auth-user__name {
+  color: var(--brand);
+  font-weight: 500;
+}
+
+/* details statt JavaScript: die Felder klappen auch ohne Skript auf */
+.auth-panel {
+  position: relative;
+}
+
+.auth-panel > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.auth-panel > summary::-webkit-details-marker {
+  display: none;
+}
+
+.auth-panel[open] > summary {
+  border-color: color-mix(in oklch, var(--gold-400) 55%, transparent);
+}
+
+.auth-panel__body {
+  position: absolute;
+  top: calc(100% + var(--space) * 2);
+  right: 0;
+  z-index: 10;
+  width: min(380px, calc(100vw - var(--space) * 4));
+  padding: calc(var(--space) * 3);
+  background: var(--card);
+  border: 1px solid color-mix(in oklch, var(--gold-400) 25%, var(--border));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow-gold);
+  animation: drop 200ms ease both;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* Schmale Fenster: das Feld legt sich unter die Leiste über die volle Breite */
+@media (max-width: 600px) {
+  .auth-panel__body {
+    position: fixed;
+    top: calc(var(--header-h) + var(--space));
+    left: calc(var(--space) * 2);
+    right: calc(var(--space) * 2);
+    width: auto;
+  }
 }
 
 /* --- Button --------------------------------------------------- */
@@ -104,78 +243,6 @@
   border-color: var(--destructive);
 }
 
-/* --- Anmelden in der Kopfleiste --------------------------------- */
-.auth {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--space);
-}
-
-.auth-login {
-  display: flex;
-  align-items: center;
-  gap: var(--space);
-}
-
-.auth-login .input {
-  width: clamp(140px, 14vw, 200px);
-}
-
-.auth-login__error {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 calc(var(--space) * 5) calc(var(--space) * 1.5);
-  color: var(--destructive);
-  font-size: 0.875rem;
-  text-align: right;
-}
-
-.auth-user {
-  display: flex;
-  align-items: center;
-  gap: var(--space);
-}
-
-.auth-user__name {
-  color: var(--brand);
-  font-weight: 500;
-}
-
-/* --- Registrieren-Feld (klappt unter der Leiste auf) ------------ */
-.auth-register > summary {
-  list-style: none;
-}
-
-.auth-register > summary::-webkit-details-marker {
-  display: none;
-}
-
-.auth-register[open] > summary {
-  color: var(--brand-strong);
-}
-
-.auth-register__panel {
-  position: absolute;
-  top: calc(100% + var(--space) * 2);
-  right: 0;
-  z-index: 5;
-  width: min(380px, calc(100vw - var(--space) * 4));
-  padding: calc(var(--space) * 3);
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glow-gold);
-  animation: drop 200ms ease both;
-}
-
-@keyframes drop {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-}
-
 /* --- Formular --------------------------------------------------- */
 .form {
   display: grid;
@@ -229,44 +296,117 @@
 }
 
 /* --- Hero ------------------------------------------------------ */
-.hero__tagline {
-  max-width: 34ch;
-  color: var(--brand);
-  font-size: clamp(1.125rem, 0.9rem + 1vw, 1.75rem);
-  font-weight: 500;
-  line-height: 1.45;
-  letter-spacing: 0.06em;
+.hero__kicker {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--space) * 2);
+  color: var(--gold-400);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
+}
+
+.hero__kicker::before,
+.hero__kicker::after {
+  content: "";
+  width: clamp(24px, 8vw, 72px);
+  height: 1px;
+  background: color-mix(in oklch, var(--gold-400) 55%, transparent);
+}
+
+/* Die Tagline trägt die Aussage, der Schriftzug im Bild die Marke */
+.hero__tagline {
+  max-width: 26ch;
+  color: var(--ink-900);
+  font-size: clamp(1.5rem, 1rem + 1.8vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
 .hero__claims {
-  color: var(--foreground);
-  font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--space) * 1) 0;
+  color: var(--gold-300);
+  font-size: clamp(0.8125rem, 0.7rem + 0.35vw, 1rem);
   font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-/* Die Texte liegen über dem Schriftzug im Hintergrund; ein weicher Schatten trennt sie davon */
+.hero__claims span {
+  white-space: nowrap;
+}
+
+.hero__claims span + span::before {
+  content: "·";
+  margin: 0 calc(var(--space) * 1.25);
+  color: var(--gold-600);
+  font-weight: 400;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--space) * 1) calc(var(--space) * 2);
+  margin-top: calc(var(--space) * 2);
+}
+
+.hero__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space);
+  min-height: 44px;
+  padding: 0 calc(var(--space) * 1.5);
+  color: var(--gold-300);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklch, var(--gold-400) 35%, transparent);
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.hero__more::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.hero__more:hover {
+  color: var(--gold-200);
+  border-bottom-color: var(--gold-400);
+}
+
+/* Die Texte liegen über dem Schriftzug im Bild; ein weicher Schatten trennt sie davon */
 .hero__tagline,
 .hero__claims,
 .pitch__body {
   text-shadow: 0 0 24px var(--ink-0), 0 2px 6px var(--ink-0);
 }
 
-.hero__claims span {
-  display: block;
+/* Einstieg in Stufen: Aussage, Claims, Aktionen */
+.hero__copy > * {
+  animation: rise 280ms ease both;
 }
 
-/* Einstieg in drei Stufen: Schriftzug, Satz, Claims */
-.hero > * {
-  animation: rise 300ms ease both;
+.hero__copy > :nth-child(3) {
+  animation-delay: 80ms;
 }
 
-.hero > :nth-child(3) {
-  animation-delay: 120ms;
+.hero__copy > :nth-child(4) {
+  animation-delay: 160ms;
 }
 
 @keyframes rise {
@@ -299,17 +439,4 @@
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-align: center;
-}
-
-/* Schmale Fenster: Anmeldefelder rutschen unter die Krone und nehmen die volle Breite */
-@media (max-width: 759px) {
-  .auth,
-  .auth-login {
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .auth-login .input {
-    flex: 1 1 140px;
-  }
 }
