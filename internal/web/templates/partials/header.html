@@ -24,7 +24,7 @@
     {{else}}
     <div class="auth">
       {{/* details statt JavaScript: beide Felder klappen auch ohne Skript auf (TECH-STACK §1(4)) */}}
-      <details class="auth-panel">
+      <details class="auth-panel"{{if .Login.Error}} open{{end}}>
         <summary class="button button--text">Anmelden</summary>
         <div class="auth-panel__body">
           <form class="form" method="post" action="/login">
@@ -44,10 +44,18 @@
               <input class="input" id="login-password" name="password" type="password"
                      autocomplete="current-password" required
                      {{with .Login.Error}}aria-invalid="true"{{end}}>
+              <a class="field__hint" href="/forgot-password">Passwort vergessen?</a>
             </div>
 
             <button class="button button--primary button--block" type="submit">Anmelden</button>
           </form>
+
+          {{if eq .Login.Error "not_verified"}}
+          <form class="form form--secondary" method="post" action="/resend-verification">
+            <input type="hidden" name="email" value="{{.Login.Email}}">
+            <button class="button button--text" type="submit">Bestätigungslink erneut senden</button>
+          </form>
+          {{end}}
         </div>
       </details>
 

@@ -16,6 +16,18 @@ type pageData struct {
 	Notice   string
 	Login    loginForm
 	Register registerForm
+	Forgot   forgotForm
+	Reset    resetForm
+}
+
+type forgotForm struct {
+	Email string
+	Error string
+}
+
+type resetForm struct {
+	Token string
+	Error string
 }
 
 type loginForm struct {
@@ -36,6 +48,9 @@ var notices = map[string]bool{
 	"verified":       true,
 	"verify_invalid": true,
 	"logged_out":     true,
+	"reset_sent":     true,
+	"reset_invalid":  true,
+	"password_reset": true,
 }
 
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {

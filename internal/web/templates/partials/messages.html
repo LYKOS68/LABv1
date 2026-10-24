@@ -12,6 +12,9 @@
 {{- else if eq . "verified"}}Deine E-Mail ist bestätigt. Du kannst dich jetzt anmelden.
 {{- else if eq . "verify_invalid"}}Dieser Bestätigungslink ist ungültig oder abgelaufen.
 {{- else if eq . "logged_out"}}Du bist abgemeldet.
+{{- else if eq . "reset_sent"}}Wenn es zu dieser E-Mail ein Konto gibt, haben wir dir einen Link geschickt. Er ist eine Stunde gültig.
+{{- else if eq . "reset_invalid"}}Dieser Link ist ungültig oder abgelaufen. Fordere bitte einen neuen an.
+{{- else if eq . "password_reset"}}Dein Passwort ist geändert. Du kannst dich jetzt anmelden.
 {{- else}}Da ist etwas schiefgelaufen. Bitte versuch es gleich noch einmal.
 {{- end}}
 {{end}}

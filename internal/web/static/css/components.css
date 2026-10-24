@@ -283,6 +283,22 @@
   font-size: 0.8125rem;
 }
 
+.form--secondary {
+  margin-top: calc(var(--space) * 2);
+  justify-items: start;
+}
+
+/* --- Einzelseite mit Formular (Passwort vergessen, neues Passwort) --- */
+.page-card {
+  width: min(420px, calc(100% - var(--space) * 4));
+  margin: calc(var(--space) * 8) auto;
+  padding: calc(var(--space) * 3);
+  background: var(--card);
+  border: 1px solid color-mix(in oklch, var(--gold-400) 25%, var(--border));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow-gold);
+}
+
 /* --- Hinweis-Meldung -------------------------------------------- */
 .notice {
   max-width: 720px;

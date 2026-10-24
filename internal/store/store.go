@@ -98,6 +98,73 @@ func (s *Store) VerifyEmail(ctx context.Context, tokenHash string) error {
 	return nil
 }
 
+// RenewVerification legt einen neuen Bestätigungs-Token an, aber nur für ein Konto,
+// das noch unbestätigt ist. Sonst ErrNotFound.
+func (s *Store) RenewVerification(ctx context.Context, email, tokenHash string, tokenTTL time.Duration) error {
+	tag, err := s.Pool.Exec(ctx, `INSERT INTO email_verifications (token_hash, user_id, expires_at)
+		SELECT $1, id, $3 FROM users WHERE lower(email)=lower($2) AND email_verified_at IS NULL`,
+		tokenHash, email, time.Now().Add(tokenTTL))
+	if err != nil {
+		return fmt.Errorf("insert verification: %w", err)
+	}
+	if tag.RowsAffected() == 0 {
+		return ErrNotFound
+	}
+	return nil
+}
+
+// CreatePasswordReset legt einen Reset-Token für das Konto mit dieser E-Mail an. Gibt es keins, ErrNotFound.
+func (s *Store) CreatePasswordReset(ctx context.Context, email, tokenHash string, tokenTTL time.Duration) error {
+	tag, err := s.Pool.Exec(ctx, `INSERT INTO password_resets (token_hash, user_id, expires_at)
+		SELECT $1, id, $3 FROM users WHERE lower(email)=lower($2)`,
+		tokenHash, email, time.Now().Add(tokenTTL))
+	if err != nil {
+		return fmt.Errorf("insert password reset: %w", err)
+	}
+	if tag.RowsAffected() == 0 {
+		return ErrNotFound
+	}
+	return nil
+}
+
+// ResetPassword löst den Token ein, setzt das neue Passwort und beendet alle Sitzungen des Kontos,
+// alles in einer Transaktion (TECH-STACK §4(2)). Der Link beweist den Postfach-Besitz,
+// deshalb gilt die E-Mail danach auch als bestätigt.
+func (s *Store) ResetPassword(ctx context.Context, tokenHash, password string) error {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return fmt.Errorf("hash password: %w", err)
+	}
+
+	tx, err := s.Pool.Begin(ctx)
+	if err != nil {
+		return fmt.Errorf("begin reset password: %w", err)
+	}
+
+	var id int
+	err = tx.QueryRow(ctx, "DELETE FROM password_resets WHERE token_hash=$1 AND expires_at > now() RETURNING user_id", tokenHash).Scan(&id)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return rollback(ctx, tx, ErrNotFound)
+	}
+	if err != nil {
+		return rollback(ctx, tx, fmt.Errorf("consume reset token: %w", err))
+	}
+	if _, err := tx.Exec(ctx, "UPDATE users SET password_hash=$1, email_verified_at = COALESCE(email_verified_at, now()) WHERE id=$2", string(hash), id); err != nil {
+		return rollback(ctx, tx, fmt.Errorf("update password: %w", err))
+	}
+	// Übrige Reset-Links verfallen mit, damit ein älterer Link das neue Passwort nicht überschreiben kann
+	if _, err := tx.Exec(ctx, "DELETE FROM password_resets WHERE user_id=$1", id); err != nil {
+		return rollback(ctx, tx, fmt.Errorf("delete other resets: %w", err))
+	}
+	if _, err := tx.Exec(ctx, "DELETE FROM sessions WHERE user_id=$1", id); err != nil {
+		return rollback(ctx, tx, fmt.Errorf("delete sessions: %w", err))
+	}
+	if err := tx.Commit(ctx); err != nil {
+		return fmt.Errorf("commit reset password: %w", err)
+	}
+	return nil
+}
+
 func (s *Store) UserName(ctx context.Context, userID int) (string, error) {
 	var name string
 	err := s.Pool.QueryRow(ctx, "SELECT username FROM users WHERE id=$1", userID).Scan(&name)
@@ -140,11 +207,16 @@ func (s *Store) SessionUser(ctx context.Context, token string) (int, error) {
 	var userID int
 	var expires time.Time
 	err := s.Pool.QueryRow(ctx, "SELECT user_id, expires_at FROM sessions WHERE token=$1", token).Scan(&userID, &expires)
-	if err != nil {
+	if errors.Is(err, pgx.ErrNoRows) {
 		return 0, ErrNotFound
 	}
+	if err != nil {
+		return 0, fmt.Errorf("select session: %w", err)
+	}
 	if time.Now().After(expires) {
-		_, _ = s.Pool.Exec(ctx, "DELETE FROM sessions WHERE token=$1", token)
+		if err := s.DeleteSession(ctx, token); err != nil {
+			return 0, fmt.Errorf("delete expired session: %w", err)
+		}
 		return 0, ErrNotFound
 	}
 	return userID, nil
