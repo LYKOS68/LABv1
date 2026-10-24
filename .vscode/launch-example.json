@@ -1,0 +1,103 @@
+// launch.json – Startknöpfe für VS Code (Seitenleiste "Ausführen und Debuggen", Taste F5).
+//
+// Jeder Block in "configurations" erscheint oben als Eintrag im Auswahlmenü.
+// Kommentare mit // sind in dieser Datei erlaubt (VS Code liest sie als JSONC).
+// Voraussetzung: VS-Code-Erweiterung "Go" (golang.go). Beim ersten Start bietet sie an,
+// den Debugger "dlv" (Delve) zu installieren – einfach bestätigen.
+//
+// Bedienung beim Debuggen:
+//   F5        starten / weiterlaufen lassen
+//   F9        Haltepunkt (roter Punkt) in der aktuellen Zeile setzen oder entfernen
+//   F10       nächste Zeile (in Funktionen nicht hineinspringen)
+//   F11       in die Funktion hineinspringen
+//   Umschalt+F5  stoppen
+// Hält das Programm an einem Haltepunkt, siehst du links alle Variablen mit ihren Werten.
+{
+	// Format-Version der Datei, immer 0.2.0 lassen.
+	"version": "0.2.0",
+
+	"configurations": [
+		// ── 1. Server starten ──────────────────────────────────────────────────────────
+		// Entspricht "go run ./cmd/lab-studio", nur mit Debugger: Haltepunkte funktionieren.
+		{
+			// Name im Auswahlmenü. Frei wählbar.
+			"name": "LAB-Studio starten",
+
+			// "go" = Go-Erweiterung ist zuständig. Für Edge/Chrome wäre es "msedge"/"chrome".
+			"type": "go",
+
+			// "launch" = VS Code startet das Programm selbst.
+			// "attach" = sich an ein schon laufendes Programm hängen (siehe Nr. 3).
+			"request": "launch",
+
+			// "auto" erkennt selbst, ob Programm oder Test. Andere Werte:
+			// "debug" (Programm bauen und debuggen), "test" (Tests debuggen), "exec" (fertige .exe debuggen).
+			"mode": "auto",
+
+			// Welches Paket gestartet wird: der Ordner mit main.go.
+			// ${workspaceFolder} = Repo-Wurzel, also C:\Users\RPC\Documents\GitHub\LABv1.
+			"program": "${workspaceFolder}/cmd/lab-studio",
+
+			// Arbeitsordner des Programms (von hier aus werden relative Pfade aufgelöst).
+			"cwd": "${workspaceFolder}",
+
+			// Umgebungsvariablen nur für diesen Start. Werte als Text in Anführungszeichen.
+			// DATABASE_URL steht hier absichtlich NICHT: sie kommt aus deinen Windows-Umgebungsvariablen
+			// (Secrets gehören nicht in Dateien, TECH-STACK §6(5)).
+			"env": {
+				"PORT": "8080",
+				"BASE_URL": "http://localhost:8080"
+			},
+
+			// Alternative zu "env": Variablen aus einer Datei laden. .env ist in .gitignore,
+			// also nicht im Git. Zum Einschalten die zwei Schrägstriche entfernen.
+			// "envFile": "${workspaceFolder}/.env",
+
+			// Argumente für das Programm (wie hinter "go run ... "). LAB-Studio nutzt aktuell keine.
+			"args": [],
+
+			// Wo Ausgaben landen: "integratedTerminal" = Terminal unten, dort siehst du auch
+			// die Mail-Links (verification mail / password reset mail).
+			// Alternative: "internalConsole" = Fenster "Debugkonsole".
+			"console": "integratedTerminal"
+		},
+
+		// ── 2. Tests debuggen ──────────────────────────────────────────────────────────
+		// Entspricht "go test ./internal/handlers", aber mit Haltepunkten in Tests und Code.
+		{
+			"name": "Tests: handlers",
+			"type": "go",
+			"request": "launch",
+			"mode": "test",
+
+			// Ordner mit den *_test.go-Dateien. Für andere Pakete einfach den Pfad ändern,
+			// z. B. "${workspaceFolder}/internal/web".
+			"program": "${workspaceFolder}/internal/handlers",
+
+			// Nur bestimmte Tests ausführen: "-test.run" mit dem Testnamen (Teil reicht).
+			// Leer lassen = alle Tests im Ordner.
+			"args": ["-test.run", "TestRateLimiter", "-test.v"]
+		},
+
+		// ── 3. An laufenden Server anhängen ────────────────────────────────────────────
+		// Für den Fall, dass der Server schon im Terminal läuft (go run oder lab-studio.exe).
+		// Nach F5 fragt VS Code, welcher Prozess gemeint ist – "lab-studio" auswählen.
+		{
+			"name": "An laufenden Server anhängen",
+			"type": "go",
+			"request": "attach",
+
+			// "local" = Prozess auf diesem Rechner. "remote" = Debugger läuft woanders (braucht "port").
+			"mode": "local",
+
+			// "${command:pickProcess}" öffnet die Prozessauswahl. Eine feste Zahl (PID) geht auch,
+			// ändert sich aber bei jedem Start – deshalb lieber die Auswahl.
+			"processId": "${command:pickProcess}"
+		}
+	]
+
+	// "compounds" würde mehrere Einträge gleichzeitig starten, z. B. Server + Browser:
+	// ,"compounds": [
+	// 	{ "name": "Server + Edge", "configurations": ["LAB-Studio starten", "Edge öffnen"] }
+	// ]
+}

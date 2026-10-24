@@ -1,0 +1,81 @@
+// Startknöpfe für LABv1 (F5). Alle Einstellungen erklärt: .vscode/launch-example.json
+//
+// Abgestimmt auf LABv1.code-workspace mit zwei Ordnern:
+//   ${workspaceFolder:LABv1}     = C:\Users\RPC\Documents\GitHub\LABv1
+//   ${workspaceFolder:my-space}  = C:\Users\RPC\dev\rap-app\my-space (nur Bildquelle, wird nicht gestartet)
+// Go liegt unter C:\Program Files\Go. DATABASE_URL kommt aus den Windows-Umgebungsvariablen.
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			// Normaler Start wie "go run ./cmd/lab-studio" → http://localhost:8080
+			"name": "LAB-Studio starten (8080)",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder:LABv1}/cmd/lab-studio",
+			"cwd": "${workspaceFolder:LABv1}",
+			"env": {
+				"PORT": "8080",
+				"BASE_URL": "http://localhost:8080"
+			},
+			"console": "integratedTerminal"
+		},
+		{
+			// Zweiter Server zum Testen, während 8080 schon läuft → http://localhost:8091
+			"name": "LAB-Studio Testport (8091)",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder:LABv1}/cmd/lab-studio",
+			"cwd": "${workspaceFolder:LABv1}",
+			"env": {
+				"PORT": "8091",
+				"BASE_URL": "http://localhost:8091"
+			},
+			"console": "integratedTerminal"
+		},
+		{
+			// Tests in internal/handlers (auth, Rate-Limit). Einzelnen Test: "-test.run", "<Name>" ergänzen.
+			"name": "Tests: handlers",
+			"type": "go",
+			"request": "launch",
+			"mode": "test",
+			"program": "${workspaceFolder:LABv1}/internal/handlers",
+			"args": ["-test.v"]
+		},
+		{
+			// Tests in internal/web (Templates parsen, CSS vorhanden)
+			"name": "Tests: web",
+			"type": "go",
+			"request": "launch",
+			"mode": "test",
+			"program": "${workspaceFolder:LABv1}/internal/web",
+			"args": ["-test.v"]
+		},
+		{
+			// An einen Server hängen, der schon im Terminal läuft (go run oder lab-studio.exe)
+			"name": "An laufenden Server anhängen",
+			"type": "go",
+			"request": "attach",
+			"mode": "local",
+			"processId": "${command:pickProcess}"
+		},
+		{
+			// Öffnet die Seite in Edge mit DevTools-Anbindung. Server muss laufen.
+			"name": "Edge öffnen (8080)",
+			"type": "msedge",
+			"request": "launch",
+			"url": "http://localhost:8080",
+			"webRoot": "${workspaceFolder:LABv1}/internal/web/static"
+		}
+	],
+	"compounds": [
+		{
+			// Server und Edge mit einem Klick. Edge ist evtl. schneller als der Server: dann einmal neu laden (F5 im Browser).
+			"name": "Server + Edge (8080)",
+			"configurations": ["LAB-Studio starten (8080)", "Edge öffnen (8080)"],
+			"stopAll": true
+		}
+	]
+}
