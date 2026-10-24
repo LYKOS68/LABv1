@@ -4,6 +4,7 @@
 !/my-space/.gitignore
 !/.env/.gitignore
 !/.claude/.gitignore
+!/.vscode/.gitignore
 .env
 *.exe
 /.claude/settings.beispiel.jsonc
