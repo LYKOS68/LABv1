@@ -4,18 +4,20 @@ import (
 	"context"
 	"embed"
 	"fmt"
+	"io/fs"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/LYKOS68/lab-studio/internal/handlers"
 	"github.com/LYKOS68/lab-studio/internal/store"
+	"github.com/LYKOS68/lab-studio/internal/web"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-//go:embed migrations/001_init.sql
+//go:embed migrations/*.sql
 var migrationsFS embed.FS
 
 func main() {
@@ -38,28 +40,43 @@ func main() {
 		os.Exit(1)
 	}
 
-	sqlBytes, err := migrationsFS.ReadFile("migrations/001_init.sql")
+	st := store.New(pool)
+
+	migrations, err := fs.Sub(migrationsFS, "migrations")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "migration read: %v\n", err)
+		fmt.Fprintf(os.Stderr, "migrations fs: %v\n", err)
 		os.Exit(1)
 	}
-	if _, err := pool.Exec(ctx, string(sqlBytes)); err != nil {
+	if err := st.Migrate(ctx, migrations); err != nil {
 		fmt.Fprintf(os.Stderr, "migration: %v\n", err)
 		os.Exit(1)
 	}
 
-	st := store.New(pool)
-	h := &handlers.Handlers{Store: st}
+	pages, err := web.Pages()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "templates: %v\n", err)
+		os.Exit(1)
+	}
+	static, err := web.Static()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "static: %v\n", err)
+		os.Exit(1)
+	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
+	baseURL := os.Getenv("BASE_URL")
+	if baseURL == "" {
+		baseURL = "http://localhost:" + port
+	}
+
+	h := &handlers.Handlers{Store: st, Pages: pages, BaseURL: baseURL}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/{$}", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "RAP-LAB OK")
-	})
+	mux.HandleFunc("GET /{$}", h.Home)
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(static)))
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
 		c, cancel := context.WithTimeout(r.Context(), 2*time.Second)
 		defer cancel()
@@ -73,13 +90,15 @@ func main() {
 	})
 	mux.HandleFunc("POST /register", h.Register)
 	mux.HandleFunc("POST /login", h.Login)
+	mux.HandleFunc("POST /logout", h.Logout)
+	mux.HandleFunc("GET /verify", h.Verify)
 	mux.HandleFunc("GET /profile/{id}", h.Profile)
 	mux.HandleFunc("GET /offerings", h.Offerings)
 	mux.HandleFunc("GET /me", h.Me)
 
 	srv := &http.Server{
 		Addr:    ":" + port,
-		Handler: mux,
+		Handler: http.NewCrossOriginProtection().Handler(mux), // CSRF-Schutz für alle schreibenden Routen (TECH-STACK §6(2))
 	}
 
 	go func() {

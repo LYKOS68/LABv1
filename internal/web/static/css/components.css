@@ -1,4 +1,4 @@
-/* Bausteine der Startseite. Gold für Labels und Navigation, Neon nur als Fokus/Hover-Glow (TECH-STACK §8(3)). */
+/* Bausteine der Startseite. Gold für Labels und Textbuttons, Neon nur für Hauptaktionen und Fokus (TECH-STACK §8(3)). */
 
 /* --- Logo ------------------------------------------------------ */
 .site-header__logo {
@@ -19,50 +19,213 @@
   transform: scale(1.06);
 }
 
-/* --- Navigation ------------------------------------------------ */
-.site-nav {
-  display: flex;
-  gap: calc(var(--space) * 2);
-}
-
-.site-nav__link {
-  position: relative;
+/* --- Button --------------------------------------------------- */
+.button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
-  padding: 0 var(--space);
-  color: var(--brand);
-  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1.0625rem);
-  font-weight: 500;
+  padding: 0 calc(var(--space) * 2.5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  text-decoration: none;
-  transition: color 150ms ease;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 150ms ease, opacity 150ms ease;
 }
 
-/* Unterstrich wächst von der Mitte, nur transform, damit nichts springt */
-.site-nav__link::after {
-  content: "";
-  position: absolute;
-  left: var(--space);
-  right: var(--space);
-  bottom: 8px;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transition: transform 200ms ease;
+.button:active {
+  transform: translateY(1px);
 }
 
-.site-nav__link:hover {
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Neon nur für die Hauptaktion; dunkle Schrift, weil Weiß auf Neon unlesbar wäre (Token-Datei) */
+.button--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.button--primary:hover {
+  background: var(--primary-hover);
+  box-shadow: var(--glow-neon);
+}
+
+.button--text {
+  background: transparent;
+  color: var(--brand);
+  padding: 0 calc(var(--space) * 1.5);
+}
+
+.button--text:hover {
   color: var(--brand-strong);
 }
 
-.site-nav__link:hover::after {
-  transform: scaleX(1);
+.button--block {
+  width: 100%;
 }
 
-.site-nav__link:active {
-  transform: translateY(1px);
+/* --- Eingabefeld ------------------------------------------------ */
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 calc(var(--space) * 1.5);
+  background: color-mix(in oklch, var(--card) 85%, transparent);
+  color: var(--foreground);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 0.9375rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.input:hover {
+  border-color: var(--ink-500);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: var(--glow-neon);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
+/* --- Anmelden in der Kopfleiste --------------------------------- */
+.auth {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+}
+
+.auth-login {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+}
+
+.auth-login .input {
+  width: clamp(140px, 14vw, 200px);
+}
+
+.auth-login__error {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 calc(var(--space) * 5) calc(var(--space) * 1.5);
+  color: var(--destructive);
+  font-size: 0.875rem;
+  text-align: right;
+}
+
+.auth-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+}
+
+.auth-user__name {
+  color: var(--brand);
+  font-weight: 500;
+}
+
+/* --- Registrieren-Feld (klappt unter der Leiste auf) ------------ */
+.auth-register > summary {
+  list-style: none;
+}
+
+.auth-register > summary::-webkit-details-marker {
+  display: none;
+}
+
+.auth-register[open] > summary {
+  color: var(--brand-strong);
+}
+
+.auth-register__panel {
+  position: absolute;
+  top: calc(100% + var(--space) * 2);
+  right: 0;
+  z-index: 5;
+  width: min(380px, calc(100vw - var(--space) * 4));
+  padding: calc(var(--space) * 3);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glow-gold);
+  animation: drop 200ms ease both;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* --- Formular --------------------------------------------------- */
+.form {
+  display: grid;
+  gap: calc(var(--space) * 2);
+}
+
+.form__title {
+  margin: 0;
+  color: var(--brand);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.form__error {
+  color: var(--destructive);
+  font-size: 0.875rem;
+}
+
+.field {
+  display: grid;
+  gap: calc(var(--space) * 0.75);
+}
+
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.field__hint {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.field__error {
+  color: var(--destructive);
+  font-size: 0.8125rem;
+}
+
+/* --- Hinweis-Meldung -------------------------------------------- */
+.notice {
+  max-width: 720px;
+  margin: calc(var(--space) * 3) auto 0;
+  padding: calc(var(--space) * 1.5) calc(var(--space) * 2);
+  background: var(--selected);
+  color: var(--selected-foreground);
+  border: 1px solid var(--selected-border);
+  border-radius: var(--radius-md);
+  text-align: center;
 }
 
 /* --- Hero ------------------------------------------------------ */
@@ -136,4 +299,17 @@
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-align: center;
+}
+
+/* Schmale Fenster: Anmeldefelder rutschen unter die Krone und nehmen die volle Breite */
+@media (max-width: 759px) {
+  .auth,
+  .auth-login {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .auth-login .input {
+    flex: 1 1 140px;
+  }
 }
