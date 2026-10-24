@@ -1,0 +1,72 @@
+/* Seitengerüst: Kopfleiste, Hero, Leder-Abschnitt.
+   Vorbild ist der Handy-Screenshot; am Computer bleibt die Reihenfolge gleich,
+   nur Breiten und Schriftgrößen wachsen mit. */
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(var(--space) * 11);
+  padding: 0 calc(var(--space) * 3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--space) * 3);
+}
+
+.hero {
+  /* Hero füllt den ersten Bildschirm, damit der Text darunter erst beim Scrollen kommt wie im Vorbild */
+  min-height: calc(100vh - var(--space) * 11);
+  /* Texte im unteren Teil, damit oben der Schriftzug aus dem Hintergrund frei steht */
+  padding: calc(var(--space) * 8) calc(var(--space) * 3) calc(var(--space) * 10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  gap: calc(var(--space) * 5);
+}
+
+/* Ein einziges Hintergrundbild für die ganze Seite. Es steht fest im Fenster,
+   damit beim Scrollen nur der Inhalt wandert und das Leder ruhig bleibt. */
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: image-set(
+    url("../img/hintergrund-1672.webp") type("image/webp"),
+    url("../img/hintergrund-1672.jpg") type("image/jpeg")
+  );
+  background-size: cover;
+  background-position: center;
+  /* Blasser, damit Schrift und Schriftzug darüber klar vorne liegen */
+  opacity: 0.28;
+}
+
+.site-header {
+  background: color-mix(in oklch, var(--ink-50) 70%, transparent);
+}
+
+.pitch {
+  padding: calc(var(--space) * 12) calc(var(--space) * 3) calc(var(--space) * 14);
+}
+
+.pitch__body {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+@media (min-width: 960px) {
+  .site-header__inner {
+    padding: 0 calc(var(--space) * 5);
+  }
+}

@@ -1,0 +1,17 @@
+{{/* Alle Meldungen an einer Stelle: Go liefert nur Codes, der sichtbare Text steht hier (TECH-STACK §9(14)). */}}
+{{define "message"}}
+{{- if eq . "email_invalid"}}Bitte gib eine gültige E-Mail-Adresse ein.
+{{- else if eq . "email_taken"}}Mit dieser E-Mail gibt es schon ein Konto.
+{{- else if eq . "name_invalid"}}Dein Name braucht 2 bis 30 Zeichen: Buchstaben, Zahlen, Leerzeichen, Punkt, Binde- oder Unterstrich.
+{{- else if eq . "name_taken"}}Dieser Name ist schon vergeben.
+{{- else if eq . "password_short"}}Dein Passwort braucht mindestens 8 Zeichen.
+{{- else if eq . "password_long"}}Dein Passwort ist zu lang (höchstens 72 Zeichen).
+{{- else if eq . "invalid_credentials"}}E-Mail oder Passwort stimmen nicht.
+{{- else if eq . "not_verified"}}Bitte bestätige zuerst deine E-Mail-Adresse über den Link in deinem Postfach.
+{{- else if eq . "verify_sent"}}Fast geschafft: Wir haben dir eine E-Mail geschickt. Bestätige dein Konto über den Link darin.
+{{- else if eq . "verified"}}Deine E-Mail ist bestätigt. Du kannst dich jetzt anmelden.
+{{- else if eq . "verify_invalid"}}Dieser Bestätigungslink ist ungültig oder abgelaufen.
+{{- else if eq . "logged_out"}}Du bist abgemeldet.
+{{- else}}Da ist etwas schiefgelaufen. Bitte versuch es gleich noch einmal.
+{{- end}}
+{{end}}

@@ -1,0 +1,25 @@
+{{define "layout"}}<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAP-LAB</title>
+  <meta name="description" content="Ein Ort für das, was zwischen Idee und Musik passiert.">
+  <link rel="preload" href="/static/fonts/Manrope-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/layout.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+  {{template "header" .}}
+  {{with .Notice}}
+  <p class="notice" role="status">{{template "message" .}}</p>
+  {{end}}
+  <main id="inhalt">
+    {{template "content" .}}
+  </main>
+</body>
+</html>
+{{end}}

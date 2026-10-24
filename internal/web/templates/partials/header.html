@@ -1,0 +1,82 @@
+{{define "header"}}
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__logo" href="/" aria-label="RAP-LAB Startseite">
+      <picture>
+        <source srcset="/static/img/krone-160.webp" type="image/webp">
+        <img src="/static/img/krone-160.jpg" width="56" height="56" alt="RAP-LAB Krone">
+      </picture>
+    </a>
+
+    {{if .UserName}}
+    <div class="auth-user">
+      <span class="auth-user__name">Hallo, {{.UserName}}</span>
+      <form method="post" action="/logout">
+        <button class="button button--text" type="submit">Abmelden</button>
+      </form>
+    </div>
+    {{else}}
+    <div class="auth">
+      <form class="auth-login" method="post" action="/login">
+        <label class="visually-hidden" for="login-email">E-Mail</label>
+        <input class="input" id="login-email" name="email" type="email" autocomplete="email"
+               placeholder="E-Mail" value="{{.Login.Email}}" required
+               {{if .Login.Error}}aria-invalid="true" aria-describedby="login-error"{{end}}>
+        <label class="visually-hidden" for="login-password">Passwort</label>
+        <input class="input" id="login-password" name="password" type="password"
+               autocomplete="current-password" placeholder="Passwort" required>
+        <button class="button button--primary" type="submit">Anmelden</button>
+      </form>
+
+      {{/* details statt JavaScript: das Feld klappt auch ohne Skript auf (TECH-STACK §1(4)) */}}
+      <details class="auth-register"{{if .Register.Open}} open{{end}}>
+        <summary class="button button--text">Registrieren</summary>
+        <div class="auth-register__panel">
+          {{template "register-form" .Register}}
+        </div>
+      </details>
+    </div>
+    {{end}}
+  </div>
+
+  {{with .Login.Error}}
+  <p class="auth-login__error" id="login-error" role="alert">{{template "message" .}}</p>
+  {{end}}
+</header>
+{{end}}
+
+{{define "register-form"}}
+<form class="form" method="post" action="/register" novalidate>
+  <h2 class="form__title">Konto erstellen</h2>
+
+  {{with .Errors.form}}<p class="form__error" role="alert">{{template "message" .}}</p>{{end}}
+
+  <div class="field">
+    <label class="field__label" for="reg-email">E-Mail</label>
+    <input class="input" id="reg-email" name="email" type="email" autocomplete="email" value="{{.Email}}" required
+           {{with .Errors.email}}aria-invalid="true" aria-describedby="reg-email-error"{{end}}>
+    {{with .Errors.email}}<p class="field__error" id="reg-email-error">{{template "message" .}}</p>{{end}}
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="reg-name">Name</label>
+    <input class="input" id="reg-name" name="name" type="text" autocomplete="nickname" value="{{.Name}}" required
+           minlength="2" maxlength="30"
+           {{with .Errors.name}}aria-invalid="true" aria-describedby="reg-name-error"{{else}}aria-describedby="reg-name-hint"{{end}}>
+    {{with .Errors.name}}<p class="field__error" id="reg-name-error">{{template "message" .}}</p>
+    {{else}}<p class="field__hint" id="reg-name-hint">So sehen dich andere auf RAP-LAB.</p>{{end}}
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="reg-password">Passwort</label>
+    <input class="input" id="reg-password" name="password" type="password" autocomplete="new-password" required
+           minlength="8"
+           {{with .Errors.password}}aria-invalid="true" aria-describedby="reg-password-error"{{else}}aria-describedby="reg-password-hint"{{end}}>
+    {{with .Errors.password}}<p class="field__error" id="reg-password-error">{{template "message" .}}</p>
+    {{else}}<p class="field__hint" id="reg-password-hint">Mindestens 8 Zeichen.</p>{{end}}
+  </div>
+
+  <button class="button button--primary button--block" type="submit">Konto erstellen</button>
+  <p class="field__hint">Wir schicken dir eine E-Mail, mit der du dein Konto bestätigst.</p>
+</form>
+{{end}}

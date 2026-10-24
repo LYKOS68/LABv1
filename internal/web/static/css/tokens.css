@@ -1,0 +1,84 @@
+/* RAP-LAB Design-Tokens v0 (Entwurf, nicht im Repo)
+   Quelle: Pixel-Messung aus __source-docs/bilder (Logo, Schriftzug, Leder, Kassette, UI-Entwürfe)
+   Modus: nur dunkel (Marke lebt auf Schwarz/Leder) */
+
+:root {
+  color-scheme: dark;
+
+  /* --- Gold (Schriftzug, Krone-Metall) ---------------------------- */
+  --gold-200: #ECE2D0;
+  --gold-300: #DCC28A;  /* Highlight im Schriftzug */
+  --gold-400: #C9A45C;  /* Markengold: Labels, Preise, Akzente */
+  --gold-500: #B88E3D;
+  --gold-600: #9D864F;  /* Gemessener Mittelton, gedämpft */
+  --gold-700: #7E622A;
+  --gold-800: #4D3B19;
+
+  /* --- Neon-Grün (Krone) ------------------------------------------ */
+  --neon-200: #D4F1CA;  /* Glow-Kern im Logo */
+  --neon-300: #A6EE8A;  /* Hover */
+  --neon-400: #83E262;  /* Primäraktion, Krone */
+  --neon-600: #44AC20;
+  --neon-800: #3D7B1E;  /* Spray-Grün: nur Deko, kein Text */
+  --neon-950: #112B08;  /* Hintergrund aktiver Chips */
+
+  /* --- Leder / warmes Schwarz (Flächen) --------------------------- */
+  --ink-0:   #000000;   /* Logo-Hintergrund */
+  --ink-50:  #0C0B09;   /* Seite */
+  --ink-100: #14120E;   /* Karte */
+  --ink-200: #1D1913;   /* Erhöht, Hover-Fläche */
+  --ink-300: #2E2920;   /* Trennlinien (Deko) */
+  --ink-400: #7A705D;   /* Eingabe-Rahmen (>= 3:1) */
+  --ink-500: #A39A88;   /* Sekundärtext */
+  --ink-900: #EDE6D6;   /* Haupttext, warmes Off-White */
+
+  /* --- Semantische Tokens (immer als Paar benutzen) --------------- */
+  --background:            var(--ink-50);
+  --foreground:            var(--ink-900);   /* 15.8:1 */
+  --card:                  var(--ink-100);
+  --card-foreground:       var(--ink-900);   /* 14.8:1 */
+  --raised:                var(--ink-200);
+  --raised-foreground:     var(--ink-900);
+
+  --primary:               var(--neon-400);  /* Nachricht schreiben, Inserieren */
+  --primary-hover:         var(--neon-300);
+  --primary-foreground:    var(--ink-50);    /* dunkle Schrift auf Neon, 12.2:1; weiß wäre 1.6:1 */
+
+  --brand:                 var(--gold-400);  /* Eyebrow-Labels, Preise, aktive Tabs */
+  --brand-strong:          var(--gold-300);
+  --brand-foreground:      var(--ink-50);    /* auf Gold-Fläche, 8.4:1 */
+
+  --secondary:             var(--ink-200);   /* Zweitbutton, Tabs */
+  --secondary-foreground:  var(--gold-300);
+
+  --muted:                 var(--ink-100);
+  --muted-foreground:      var(--ink-500);   /* 6.6:1 auf Karte */
+
+  --selected:              var(--neon-950);  /* "Ich biete"-Auswahl, aktiver Chip */
+  --selected-foreground:   var(--neon-400);
+  --selected-border:       var(--neon-600);
+
+  --border:                var(--ink-300);   /* nur Deko-Linien */
+  --input:                 var(--ink-400);   /* 3.8:1, Pflicht für Formularfelder */
+  --ring:                  var(--neon-400);  /* Fokus, 11.6:1 */
+
+  --destructive:           #F07167;          /* 6.5:1 auf Karte */
+  --destructive-foreground: var(--ink-50);
+  --warning:               #E8B44A;
+  --warning-foreground:    var(--ink-50);
+
+  /* --- Effekte ---------------------------------------------------- */
+  --glow-neon: 0 0 0 1px color-mix(in oklch, var(--neon-400) 60%, transparent),
+               0 0 18px color-mix(in oklch, var(--neon-400) 35%, transparent);
+  --glow-gold: 0 0 24px color-mix(in oklch, var(--gold-400) 18%, transparent);
+
+  /* --- Schrift ---------------------------------------------------- */
+  --font-sans: "Manrope", ui-sans-serif, sans-serif; /* lokal gehostet, kein Google-CDN */
+  --tracking-label: 0.14em;  /* GROSSBUCHSTABEN-Labels wie "DEIN SOUND. DEINE LEUTE." */
+
+  /* --- Form ------------------------------------------------------- */
+  --radius-sm: 8px;   /* Chips, Badges */
+  --radius-md: 12px;  /* Buttons, Inputs */
+  --radius-lg: 16px;  /* Karten */
+  --space: 8px;       /* Raster: Vielfache von 8 */
+}

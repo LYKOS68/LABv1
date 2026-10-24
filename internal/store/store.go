@@ -5,8 +5,11 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -17,33 +20,110 @@ type Store struct {
 
 func New(pool *pgxpool.Pool) *Store { return &Store{Pool: pool} }
 
-var ErrNotFound = errors.New("not found")
+var (
+	ErrNotFound           = errors.New("not found")
+	ErrEmailTaken         = errors.New("email taken")
+	ErrNameTaken          = errors.New("name taken")
+	ErrInvalidCredentials = errors.New("invalid credentials")
+	ErrNotVerified        = errors.New("email not verified")
+)
 
-func (s *Store) CreateUser(ctx context.Context, username, password string) (int, error) {
+// CreateUser legt Nutzer, Profil und Bestätigungs-Token in einer Transaktion an (TECH-STACK §4(2)),
+// damit es nie einen Nutzer ohne Profil oder ohne Bestätigungsweg gibt.
+func (s *Store) CreateUser(ctx context.Context, email, name, password, tokenHash string, tokenTTL time.Duration) (int, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("hash password: %w", err)
 	}
-	var id int
-	err = s.Pool.QueryRow(ctx, "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING id", username, string(hash)).Scan(&id)
+
+	tx, err := s.Pool.Begin(ctx)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("begin create user: %w", err)
 	}
-	_, _ = s.Pool.Exec(ctx, "INSERT INTO profiles (user_id) VALUES ($1)", id)
+
+	var id int
+	err = tx.QueryRow(ctx, "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id", name, email, string(hash)).Scan(&id)
+	if err != nil {
+		return 0, rollback(ctx, tx, uniqueUserError(err))
+	}
+	if _, err := tx.Exec(ctx, "INSERT INTO profiles (user_id, display_name) VALUES ($1, $2)", id, name); err != nil {
+		return 0, rollback(ctx, tx, fmt.Errorf("insert profile: %w", err))
+	}
+	if _, err := tx.Exec(ctx, "INSERT INTO email_verifications (token_hash, user_id, expires_at) VALUES ($1, $2, $3)", tokenHash, id, time.Now().Add(tokenTTL)); err != nil {
+		return 0, rollback(ctx, tx, fmt.Errorf("insert verification: %w", err))
+	}
+	if err := tx.Commit(ctx); err != nil {
+		return 0, fmt.Errorf("commit create user: %w", err)
+	}
 	return id, nil
 }
 
-func (s *Store) AuthUser(ctx context.Context, username, password string) (int, error) {
+// AuthUser prüft das Passwort vor dem Bestätigungsstatus, damit Fremde nicht erfahren,
+// ob eine E-Mail registriert, aber unbestätigt ist.
+func (s *Store) AuthUser(ctx context.Context, email, password string) (int, error) {
 	var id int
 	var hash string
-	err := s.Pool.QueryRow(ctx, "SELECT id, password_hash FROM users WHERE username=$1", username).Scan(&id, &hash)
+	var verified bool
+	err := s.Pool.QueryRow(ctx, "SELECT id, password_hash, email_verified_at IS NOT NULL FROM users WHERE lower(email)=lower($1)", email).Scan(&id, &hash, &verified)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return 0, ErrInvalidCredentials
+	}
 	if err != nil {
-		return 0, ErrNotFound
+		return 0, fmt.Errorf("select user: %w", err)
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)); err != nil {
-		return 0, errors.New("invalid credentials")
+		return 0, ErrInvalidCredentials
+	}
+	if !verified {
+		return 0, ErrNotVerified
 	}
 	return id, nil
+}
+
+// VerifyEmail löst den Token in einem Statement ein: Token löschen und Nutzer bestätigen
+// passieren gemeinsam oder gar nicht.
+func (s *Store) VerifyEmail(ctx context.Context, tokenHash string) error {
+	var id int
+	err := s.Pool.QueryRow(ctx, `WITH t AS (
+		DELETE FROM email_verifications WHERE token_hash=$1 AND expires_at > now() RETURNING user_id
+	)
+	UPDATE users SET email_verified_at = COALESCE(email_verified_at, now())
+	FROM t WHERE users.id = t.user_id RETURNING users.id`, tokenHash).Scan(&id)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return ErrNotFound
+	}
+	if err != nil {
+		return fmt.Errorf("verify email: %w", err)
+	}
+	return nil
+}
+
+func (s *Store) UserName(ctx context.Context, userID int) (string, error) {
+	var name string
+	err := s.Pool.QueryRow(ctx, "SELECT username FROM users WHERE id=$1", userID).Scan(&name)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return "", ErrNotFound
+	}
+	if err != nil {
+		return "", fmt.Errorf("select user name: %w", err)
+	}
+	return name, nil
+}
+
+// uniqueUserError übersetzt Unique-Verletzungen in fachliche Fehler, damit der Handler
+// dem Nutzer sagen kann, welches Feld schon vergeben ist.
+func uniqueUserError(err error) error {
+	var pgErr *pgconn.PgError
+	if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+		taken := map[string]error{
+			"users_email_key":    ErrEmailTaken,
+			"users_username_key": ErrNameTaken,
+		}
+		if e, ok := taken[pgErr.ConstraintName]; ok {
+			return e
+		}
+	}
+	return fmt.Errorf("insert user: %w", err)
 }
 
 func (s *Store) CreateSession(ctx context.Context, userID int, ttl time.Duration) (string, error) {
