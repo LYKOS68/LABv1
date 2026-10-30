@@ -107,15 +107,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 		h.loginFailed(w, asJSON, http.StatusInternalServerError, in.Email, "server_error")
 		return
 	}
-	http.SetCookie(w, &http.Cookie{
-		Name:     sessionCookie,
-		Value:    token,
-		Path:     "/",
-		MaxAge:   int(sessionTTL.Seconds()),
-		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
-		Secure:   r.TLS != nil, // online über HTTPS automatisch Secure (TECH-STACK §6(3))
-	})
+	h.setSessionCookie(w, r, token, int(sessionTTL.Seconds()))
 
 	if asJSON {
 		writeJSON(w, http.StatusOK, map[string]any{"ok": true})
@@ -130,7 +122,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 			slog.Error("delete session", "err", err)
 		}
 	}
-	http.SetCookie(w, &http.Cookie{Name: sessionCookie, Value: "", Path: "/", MaxAge: -1, HttpOnly: true, SameSite: http.SameSiteLaxMode, Secure: r.TLS != nil})
+	h.setSessionCookie(w, r, "", -1)
 	http.Redirect(w, r, "/?notice=logged_out", http.StatusSeeOther)
 }
 
@@ -264,7 +256,7 @@ func (h *Handlers) ResetPassword(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Alle Sitzungen sind beendet; das eigene Cookie wird mit aufgeräumt
-	http.SetCookie(w, &http.Cookie{Name: sessionCookie, Value: "", Path: "/", MaxAge: -1, HttpOnly: true, SameSite: http.SameSiteLaxMode, Secure: r.TLS != nil})
+	h.setSessionCookie(w, r, "", -1)
 	if asJSON {
 		writeJSON(w, http.StatusOK, map[string]any{"status": "password_reset"})
 		return
@@ -402,4 +394,17 @@ func writeJSON(w http.ResponseWriter, status int, v any) {
 	if err := json.NewEncoder(w).Encode(v); err != nil {
 		slog.Error("write json", "err", err)
 	}
+}
+
+
+func (h *Handlers) setSessionCookie(w http.ResponseWriter, r *http.Request, token string, maxAge int) {
+	http.SetCookie(w, &http.Cookie{
+		Name: sessionCookie,
+		Value: token,
+		Path: "/",
+		MaxAge: maxAge,
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+		Secure: h.sessionCookieSecure(r),
+	})
 }

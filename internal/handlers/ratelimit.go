@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"net"
 	"net/http"
 	"strconv"
 	"sync"
@@ -19,6 +18,7 @@ type rateLimitEntry struct {
 // RateLimiter erlaubt je Schlüssel (Bereich + IP) höchstens Attempts Versuche pro Window.
 // Abgelaufene Einträge räumt jeder Aufruf selbst weg, deshalb braucht es keine Goroutine (TECH-STACK §7).
 type RateLimiter struct {
+	ProxyPolicy *ProxyPolicy
 	Attempts int
 	Window   time.Duration
 
@@ -62,7 +62,7 @@ func (rl *RateLimiter) Allow(key string) (allowed bool, retryAfter time.Duration
 // Login-Versuche nicht das Passwort-Zurücksetzen sperren.
 func (rl *RateLimiter) Limit(scope string, next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		allowed, retryAfter := rl.Allow(scope + ":" + clientIP(r))
+		allowed, retryAfter := rl.Allow(scope + ":" + rl.ProxyPolicy.clientIP(r))
 		if allowed {
 			next(w, r)
 			return
@@ -76,12 +76,3 @@ func (rl *RateLimiter) Limit(scope string, next http.HandlerFunc) http.HandlerFu
 	}
 }
 
-// clientIP nimmt die Adresse der direkten Verbindung. Hinter einem Proxy wäre das der Proxy;
-// dann muss hier der weitergereichte Header ausgewertet werden.
-func clientIP(r *http.Request) string {
-	host, _, err := net.SplitHostPort(r.RemoteAddr)
-	if err != nil {
-		return r.RemoteAddr
-	}
-	return host
-}

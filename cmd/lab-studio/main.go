@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/fs"
 	"net/http"
+	"net/url"
+	"strconv"
 	"os"
 	"os/signal"
 	"syscall"
@@ -72,7 +74,25 @@ func main() {
 		baseURL = "http://localhost:" + port
 	}
 
-	h := &handlers.Handlers{Store: st, Pages: pages, BaseURL: baseURL}
+	allowLocal := false
+	if value := os.Getenv("ALLOW_INSECURE_LOCAL_HTTP"); value != "" {
+		allowLocal, err = strconv.ParseBool(value)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "local HTTP configuration: %v\n", err)
+			os.Exit(1)
+		}
+	}
+	listenAddr, err := httpListenAddr(baseURL, port, allowLocal)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "HTTP configuration: %v\n", err)
+		os.Exit(1)
+	}
+	proxyPolicy, err := handlers.NewProxyPolicy(os.Getenv("TRUSTED_PROXY_CIDRS"))
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "proxy configuration: %v\n", err)
+		os.Exit(1)
+	}
+	h := &handlers.Handlers{Store: st, Pages: pages, BaseURL: baseURL, AllowInsecureLocalHTTP: allowLocal}
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", h.Home)
@@ -90,6 +110,7 @@ func main() {
 	})
 	// Ein Zähler je Bereich und IP: 10 Versuche in 10 Minuten
 	limiter := handlers.NewRateLimiter(10, 10*time.Minute)
+	limiter.ProxyPolicy = proxyPolicy
 	mux.HandleFunc("POST /register", limiter.Limit("register", h.Register))
 	mux.HandleFunc("POST /login", limiter.Limit("login", h.Login))
 	mux.HandleFunc("POST /logout", h.Logout)
@@ -104,12 +125,12 @@ func main() {
 	mux.HandleFunc("GET /me", h.Me)
 
 	srv := &http.Server{
-		Addr:    ":" + port,
+		Addr:    listenAddr,
 		Handler: http.NewCrossOriginProtection().Handler(mux), // CSRF-Schutz für alle schreibenden Routen (TECH-STACK §6(2))
 	}
 
 	go func() {
-		fmt.Printf("http: listening on :%s\n", port)
+		fmt.Printf("http: listening on %s\n", listenAddr)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			fmt.Fprintf(os.Stderr, "http: %v\n", err)
 			os.Exit(1)
@@ -126,4 +147,26 @@ func main() {
 		fmt.Fprintf(os.Stderr, "shutdown: %v\n", err)
 	}
 	fmt.Println("shutdown complete")
+}
+
+
+func httpListenAddr(baseURL, port string, allowLocal bool) (string, error) {
+	publicURL, err := url.Parse(baseURL)
+	if err != nil {
+		return "", fmt.Errorf("parse BASE_URL: %w", err)
+	}
+	if publicURL.Host == "" || publicURL.User != nil {
+		return "", fmt.Errorf("BASE_URL must be an absolute public URL")
+	}
+	if allowLocal {
+		host := publicURL.Hostname()
+		if publicURL.Scheme != "http" || (host != "localhost" && host != "127.0.0.1" && host != "::1") {
+			return "", fmt.Errorf("local HTTP requires a loopback BASE_URL")
+		}
+		return "127.0.0.1:" + port, nil
+	}
+	if publicURL.Scheme != "https" {
+		return "", fmt.Errorf("online operation requires an HTTPS BASE_URL")
+	}
+	return ":" + port, nil
 }

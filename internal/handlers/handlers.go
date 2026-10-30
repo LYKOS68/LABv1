@@ -11,6 +11,7 @@ import (
 )
 
 type Handlers struct {
+	AllowInsecureLocalHTTP bool
 	Store   *store.Store
 	Pages   map[string]*template.Template
 	BaseURL string // Grundadresse für Links in E-Mails, z. B. http://localhost:8080
@@ -56,3 +57,4 @@ func (h *Handlers) Me(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, `{"user_id":%d}`, uid)
 }
+
